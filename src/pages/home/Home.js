@@ -9,7 +9,7 @@ import ReelStory from './ReelStory';
 function Home() {
   return (
     <div>
-      
+      <p>Hello, this is Home</p>
     </div>
   )
 }
