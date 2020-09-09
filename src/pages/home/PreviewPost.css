@@ -1,0 +1,13 @@
+.preview-post {
+  display: none;
+  width: 75%;
+  padding: 25px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  border-radius: 0 0 15px 15px;
+}
+
+.image-preview__image {
+  max-width: 100%;
+  height: auto;
+}

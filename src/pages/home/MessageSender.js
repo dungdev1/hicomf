@@ -1,48 +1,36 @@
-import React from 'react'
-import { Avatar } from '@material-ui/core'
-import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
-import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
-
-import UpLoadButton from '../../components/UpLoadButton';
-import EmotionButton from '../../components/EmotionButton';
-import FriendsButton from '../../components/FriendsButton';
+import React, { useContext, useState } from 'react'
+import { AuthContext } from '../../contexts/AuthContext';
 
 import './MessageSender.css';
+import PostForm from './PostForm';
+import PreviewPost from './PreviewPost';
 
 function MessageSender() {
+  const [file, setFile] = useState({});
+  const [caption, setCaption] = useState("");
+  
+  const handleFileChange = (newFile) => {
+    setFile(newFile);
+  };
+
+  const handleCaptionChange = (newCaption) => {
+    setCaption(newCaption);
+  };
+
   return (
     <div className="message-sender">
-      <Avatar src="" />
-      <form>
-        <input
-          type="text"
-          className="message-sender__input"
-          placeholder="What's on your mind?"
-        />
-        <div className="message-sender__infoButtons">
-          <div className="message-sender__option">
-            <UpLoadButton />
-          </div>
-          <div className="message-sender__option">
-            <FriendsButton />
-          </div>
-          <div className="message-sender__option">
-            <EmotionButton />
-          </div>
-        </div>
-        <div className="message-sender__liveInput">
-          <div className="message-sender__liveInput__option">
-            <PhotoCameraOutlinedIcon style={{color: "#5085E8"}} />
-          </div>
-          <div className="message-sender__liveInput__option">
-            <VideocamOutlinedIcon style={{color: "#5085E8"}} />
-          </div>
-          
-        </div>
-         
-      </form>
+      <PostForm
+        caption={caption}
+        file={file}
+        onFileChange={handleFileChange}
+        onCaptionChange={handleCaptionChange}
+      />
+      <PreviewPost
+        file={file}
+        caption={caption}
+      />
     </div>
-  )
+  );
 }
 
 export default MessageSender
