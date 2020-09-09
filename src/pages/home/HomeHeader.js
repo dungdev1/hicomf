@@ -1,15 +1,17 @@
 import React from 'react';
 
-function Header() {
+import './HomeHeader.css';
+
+function HomeHeader() {
   return (
-    <header>
+    <nav>
       <h3>Posts</h3>
       <h3>Photos</h3>
       <h3>Communications</h3>
       <h3>Favorites</h3>
       <h3>Recommendation</h3>
-    </header>
-  )
+    </nav>
+  );
 }
 
-export default Header;
+export default HomeHeader;

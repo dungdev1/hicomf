@@ -1,11 +1,8 @@
 import React from 'react';
-import Header from '../../components/Header';
+import HomeHeader from './HomeHeader';
 import Sidebar from '../../components/Sidebar';
-import Widgets from '../../components/Widgets';
+import Widgets from './Widgets';
 import Feed from './Feed';
-import MessageSender from './MessageSender';
-import Post from './Post';
-import ReelStory from './ReelStory';
 
 import './Home.css';
 
@@ -16,8 +13,11 @@ function Home() {
         <Sidebar />
       </div>
       <div className="home__right">
-        <Header />      
-        <Feed />
+        <HomeHeader />
+        <div className="home__main row">
+          <Feed />
+          <Widgets />
+        </div>        
       </div>
       
     </div>

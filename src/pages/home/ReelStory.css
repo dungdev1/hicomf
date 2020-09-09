@@ -1,0 +1,17 @@
+.reelStory {
+  display: flex;
+  flex-direction: column;
+}
+
+.reelStory > h3 {
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.stories {
+  display: flex;
+}
+
+.stories .MuiSvgIcon-root {
+  color: white;
+}

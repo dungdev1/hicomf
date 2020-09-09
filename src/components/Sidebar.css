@@ -2,10 +2,10 @@
 
 .sidebar {
   background-color: #F2F2F5;
-  margin-right: 40px;
+  /* margin-right: 40px; */
   padding-top: 50px;
   padding-right: 25px;
-  padding-left: 70px;
+  padding-left: 20%;
   font-size: 18px;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
@@ -46,6 +46,10 @@
   margin-left: auto;
   font-size: 2rem;
   color: #ccc;
+}
+
+.menu__item:hover > .MuiSvgIcon-root, .shortcut__item:hover > .MuiSvgIcon-root {
+  color: #000;
 }
 
 .icon {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,11 +6,11 @@ import {
 } from "react-router-dom";
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
-import { AuthContext } from './contexts/AuthContext';
+// import { AuthContext } from './contexts/AuthContext';
 
 export default function AppRoutes(props)  {
-  const [{ user }, ] = useContext(AuthContext);
-
+  //const [{ user }, ] = useContext(AuthContext);
+  const user = true;
   return (
     <Router>
       <Switch>

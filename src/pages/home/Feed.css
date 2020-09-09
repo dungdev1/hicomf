@@ -1,0 +1,11 @@
+.feed {
+  flex: 1;
+  margin-right: 25px;
+}
+
+@media (max-width: 899px) {
+  .posts {
+    width: 75%;
+    margin: 0 auto;
+  }
+}

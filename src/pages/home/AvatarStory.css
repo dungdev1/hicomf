@@ -1,0 +1,7 @@
+.avatar {
+  padding: 5px;
+  border: 2px solid #5085E8;
+  border-radius: 50%;
+  width: fit-content;
+  margin-left: 8px;
+}

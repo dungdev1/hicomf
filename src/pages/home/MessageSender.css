@@ -1,0 +1,49 @@
+.message-sender {
+  display: flex;
+  padding: 13px;
+  background-color: #FFFFFF;
+  align-items: center;
+  border-radius: 10px;
+  border: 2px solid #EBEBEB;
+  box-shadow: 0 3px 1px #EBEBEB;
+  font-weight: 400;
+}
+
+.message-sender > form {
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: 10px;
+}
+
+.message-sender > form > input {
+  flex: 1;
+  border: 0;
+  background-color: transparent;
+  outline-width: 0;
+}
+
+.message-sender__infoButtons {
+  display: flex;
+  align-items: center;
+}
+
+.message-sender__liveInput {
+  display: flex;
+  align-items: center;
+
+}
+.message-sender__liveInput__option {
+  display: flex;
+  padding: 13px;
+  border-left: 1px solid #EBEBEB;
+}
+
+.message-sender__liveInput__option:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.message-sender__option .MuiIconButton-root {
+  padding: 10px;
+}

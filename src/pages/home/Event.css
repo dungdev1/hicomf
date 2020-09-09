@@ -1,0 +1,31 @@
+.upcoming-events {
+  margin-top: 50px;
+}
+
+.upcoming-envents__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.upcoming-envents__header > h3 {
+  font-weight: 600;
+}
+
+.events > img {
+  object-fit: cover;
+  margin-bottom: 25px;
+  max-width: 250px;
+  height: auto;
+}
+
+.events > h4 {
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.events > p {
+  font-weight: 400;
+  font-size: 13px;
+  color: #454545;
+}
