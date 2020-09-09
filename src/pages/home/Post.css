@@ -31,8 +31,9 @@
 
 .post__image > img {
   max-width: 100%;
-  min-width: 500px;
   height: auto;
+  display: block;
+  margin: auto;
 }
 
 .post__caption {

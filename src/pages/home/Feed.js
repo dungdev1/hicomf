@@ -16,13 +16,12 @@ function Feed() {
         setPosts(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
       );
   }, []);
-  console.log(posts);
 
   return (
     <div className="feed">
       <MessageSender />
       <div className="posts">
-        {posts && posts.map(post => (
+        {posts.map(post => (
           <Post
             key={post.id}
             profilePic={post.data.profilePic}
@@ -34,7 +33,7 @@ function Feed() {
             numComment={post.data.numComment}
             numShare={post.data.numShare}
           />
-        ))};
+        ))}
       </div>
     </div>
   )

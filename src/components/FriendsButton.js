@@ -20,7 +20,7 @@ function FriendsButton() {
   return (
     <div className={classes.root}>
       <label>
-        <IconButton color="#D3D8E0" component="span">
+        <IconButton component="span">
           <PermIdentityOutlinedIcon />
         </IconButton>
       </label>
