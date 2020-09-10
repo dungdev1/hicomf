@@ -7,11 +7,16 @@ import './Login.css';
 
 import Button from '@material-ui/core/Button';
 
+import firebase from 'firebase';
+
 function Login() {
   const [, dispatch] = useContext(AuthContext);
   const signIn = () => {
     auth
-      .signInWithPopup(provider)
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(function() {
+        return auth.signInWithPopup(provider);
+      })
       .then(result => {
         dispatch({
           type: actionTypes.SET_USER,
