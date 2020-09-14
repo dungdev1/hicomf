@@ -1,0 +1,8 @@
+button:hover svg > path {
+  stroke: #5085E8;
+}
+
+.button {
+  fill: #d3d8e0;
+  stroke: #d3d8e0;
+}

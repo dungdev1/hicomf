@@ -14,38 +14,6 @@ import db, { firebaseApp } from '../../lib/firebase';
 
 import './PostForm.css';
 
-const uploadImageProcess = ({ file, onCaptionChange, onFileChange }) => {
-  let uploader = document.getElementById('uploader');
-  uploader.style.display = "block";
-
-  // Upload image to storage
-  // Create a storage ref
-  const storageRef = firebaseApp.storage().ref('posts/' + file.name);
-
-  // Upload file
-  const task = storageRef.put(file);
-
-  // Update progress bar
-  task.on('state_changed',
-    function progress(snapshot) {
-      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      uploader.value = percentage;
-    },
-
-    function error(err) {
-      console.error(err);
-    },
-
-    function complete() {
-      uploader.style.display = "none";
-      onCaptionChange("");
-      onFileChange({});
-    }
-  );
-
-  return storageRef;
-}
-
 function PostForm(props) {
   const [{ user },] = useContext(AuthContext);
 
@@ -85,29 +53,22 @@ function PostForm(props) {
           storageRef.getDownloadURL()
             .then((url) => {
               db.collection('posts').add({
+                user: db.doc('users/' + user.uid),
                 caption: props.caption,
                 image: url,
-                numComment: 0,
-                numLike: 0,
-                numShare: 0,
-                profilePic: user.photoURL,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                username: user.displayName,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
               });
             });
         }
       );
     }
     else {
+      props.onCaptionChange("");
       db.collection('posts').add({
+        user: db.doc('users/' + user.uid),
         caption: props.caption,
         image: "",
-        numComment: 0,
-        numLike: 0,
-        numShare: 0,
-        profilePic: user.photoURL,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        username: user.displayName,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
     }
   }

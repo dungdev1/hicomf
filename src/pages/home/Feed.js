@@ -8,13 +8,26 @@ import './Feed.css';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
-
+  
   useEffect(() => {
     db.collection("posts")
       .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) =>
-        setPosts(snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() })))
-      );
+      .onSnapshot(function(querySnapshot) {
+        let allPosts = [];
+        querySnapshot.docs.forEach((doc, index) => {
+          const post = doc.data();
+          post.id = doc.id;
+          post.user.get()
+            .then(doc => doc.data())
+            .then(userData => { post.userData = userData; })
+            .then(() => {
+              allPosts.push(post);
+              if (index === querySnapshot.docs.length - 1) {
+                setPosts(allPosts);
+              }
+            })
+        });
+      });
   }, []);
 
   return (
@@ -24,14 +37,12 @@ function Feed() {
         {posts.map(post => (
           <Post
             key={post.id}
-            profilePic={post.data.profilePic}
-            image={post.data.image}
-            username={post.data.username}
-            timestamp={post.data.timestamp}
-            caption={post.data.caption}
-            numLike={post.data.numLike}
-            numComment={post.data.numComment}
-            numShare={post.data.numShare}
+            postID={post.id}
+            profilePic={post.userData.photoURL}
+            image={post.image}
+            username={post.userData.displayName}
+            timestamp={post.timestamp}
+            caption={post.caption}
           />
         ))}
       </div>

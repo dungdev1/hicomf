@@ -42,36 +42,6 @@
   font-weight: 400;
 }
 
-.button {
-  border: 0;
-  outline-width: 0;
-  background-color: transparent;
-}
-
-.button:hover {
-  cursor: pointer;
-}
-
-.button:hover path {
-  /* fill: #f0f2f5; */
-  stroke: blue;
-}
-
-.post__options {
-  display: flex;
-  margin-top: 30px;
-}
-
-.post__option {
-  display: flex;
-  width: 100px;
-  align-items: center;
-}
-
-.post__option > .button {
-  margin-right: 10px;
-}
-
 /* .post__option:hover {
   cursor: pointer;
   background-color: #d3d8e0;
