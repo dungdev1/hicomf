@@ -1,0 +1,25 @@
+.comment-box__input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 15px;
+  margin-bottom: 10px;
+}
+
+.comment-box__input-avatar {
+  margin-right: 10px;
+}
+
+.comment-box__form {
+  flex-grow: 1;
+  padding: 10px 13px;
+  background-color: #f2f0f5;
+  border-radius: 20px;
+}
+
+.comment-box__form  input {
+  border: transparent;
+  outline-width: 0;
+  width: 100%;
+  background-color: transparent;
+}

@@ -1,0 +1,18 @@
+.comment-box__options {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ced0c4;
+  font-size: 17px;
+  font-weight: 400;
+  color: #5085E8;
+}
+
+.comment-box__options > p {
+  border: 1px solid transparent;
+  width: fit-content;
+}
+
+.comment-box__options > p:hover {
+  border-bottom: 1px solid #5085E8;
+  cursor: pointer;
+}
