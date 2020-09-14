@@ -4,6 +4,7 @@ import { actionTypes } from '../../reducers/authReducer';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import './Login.css';
+import F_icon  from '../../assets/images/F_icon@2x.png';
 
 import Button from '@material-ui/core/Button';
 
@@ -28,6 +29,9 @@ function Login() {
 
   return (
     <div className="login">
+      <div className="login__logo">
+        <img src={F_icon} alt="Facebook Logo"/>
+      </div>
       <Button type="submit" onClick={signIn}>
         Sign In
       </Button>
