@@ -18,7 +18,7 @@ function Comment({ userInfo, time, content }) {
             <p>{userInfo.displayName}</p>
           </div>
           <div className="comment__metadata">
-            <p>{new Date(time?.toDate()).toUTCString()}</p>
+            <p>{new Date(time?.toDate()).toLocaleString("en-US", { timeZone: 'Asia/Ho_Chi_Minh' })}</p>
           </div>
         </div>
         <div className="comment__actions">

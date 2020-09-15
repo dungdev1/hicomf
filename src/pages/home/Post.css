@@ -2,6 +2,8 @@
   margin-top: 25px;
   padding: 25px;
   background-color: #FFFFFF;
+  border: 1px solid #EBEBEB;
+  border-radius: 10px;
 }
 
 .post__top {
