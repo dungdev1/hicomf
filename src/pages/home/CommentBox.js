@@ -6,41 +6,11 @@ import Comment from './Comment';
 import db from '../../lib/firebase';
 import CommentInput from './CommentInput';
 import CommentLoadingOption from './CommentLoadingOption';
+import { useFetch } from '../../hooks/useFetch';
 
 function CommentBox({ postID }) {
-  const [comments, setComments] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  function loadData(numRecords) {
-    db.collection(`posts/${postID}/comments`)
-      .limit(numRecords)
-      .orderBy('timestamp', 'desc')
-      .onSnapshot(function (querySnapshot) {
-        if (querySnapshot.docs.length === 0)  {
-          setIsLoaded(true);
-        }
-        let allComments = [];
-        querySnapshot.docs.forEach((doc, index) => {
-          const comment = doc.data();
-          comment.id = doc.id;
-          comment.user.get()
-            .then(doc => doc.data())
-            .then(userData => { comment.userData = userData })
-            .then(() => {
-              allComments.push(comment);
-              if (index === querySnapshot.docs.length - 1) {
-                setComments(allComments);
-                setIsLoaded(true);
-              }
-            });
-        });
-      });
-  }
-
-  useEffect(() => {
-    loadData(2);
-  }, []);
-
+  const [isAllowLoad, setIsAllowLoad] = useState(true);
+  const [comments, setComments, isLoaded] = useFetch(`posts/${postID}/comments`, 2, isAllowLoad, setIsAllowLoad);
   return (
     <>
       {!isLoaded
@@ -48,8 +18,8 @@ function CommentBox({ postID }) {
         : (
           <div className="comment-box">
             <CommentLoadingOption 
-              loadData={loadData}
-            />
+              postID={postID}
+              onSetCommentsChange={setComments} />
             <CommentInput postID={postID} />
             <div className="comment-box__comments">
               {comments.map(comment => (
