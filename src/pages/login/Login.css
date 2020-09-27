@@ -9,13 +9,15 @@
 
 .login__logo {
   margin-bottom: 100px;
+  width: 200px;
 }
 
 .login > button {
   width: 300px;
-  background-color: #2e81f4;
-  color: #eff2f5;
-  font-weight: 500;
+  background-color:#a5adb5;
+  color: #000;
+  font-weight: 600;
+  letter-spacing: 2px;
 }
 
 .login > button:hover {

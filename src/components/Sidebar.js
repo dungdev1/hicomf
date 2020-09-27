@@ -1,5 +1,6 @@
 import React from 'react';
-import F_icon from '../assets/images/F_icon.png';
+// import F_icon from '../assets/images/F_icon.png';
+import logo from '../assets/images/logo.svg';
 import noun_Box_1276334 from '../assets/images/noun_Box_1276334.svg';
 import noun_event_1379383 from '../assets/images/noun_event_1379383.svg';
 import noun_friends_1297819 from '../assets/images/noun_friends_1297819.svg';
@@ -19,7 +20,7 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="logo">
-        <img src={F_icon} alt="Facebook icon" />
+        <img src={logo} alt="Facebook icon" />
       </div>
       <div className="menu">
         <p>Menu</p>
