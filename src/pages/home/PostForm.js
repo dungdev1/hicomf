@@ -13,9 +13,10 @@ import firebase from 'firebase';
 import db, { firebaseApp } from '../../lib/firebase';
 
 import './PostForm.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function PostForm(props) {
-  const [{ user },] = useContext(AuthContext);
+  const { user } = useAuth0();
 
   const handleCaptionChange = (e) => {
     props.onCaptionChange(e.target.value);

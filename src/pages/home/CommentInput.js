@@ -6,9 +6,10 @@ import db from '../../lib/firebase';
 import firebase from 'firebase';
 
 import './CommentInput.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function CommentInput({ postID }) {
-  const [{ user }, ] = useContext(AuthContext);
+  const { user } = useAuth0();
   const [content, setContent] = useState("");
 
   function handleInputChange(e) {

@@ -1,0 +1,16 @@
+.login-button > button, .logout-button > button {
+  width: 300px;
+  background-color:#a5adb5;
+  color: #000;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.logout-button > button {
+  width: 100%;
+}
+
+.login-button > button:hover, .logout-button > button:hover {
+  color: #000;
+  background-color: #e2e2e2;
+}

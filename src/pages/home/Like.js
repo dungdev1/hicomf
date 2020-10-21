@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React, { useState, useEffect, useContext } from 'react';
 import Button from '../../components/Button';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -5,7 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import db from '../../lib/firebase';
 
 function Like(props) {
-  const [{ user }, ] = useContext(AuthContext);
+  const { user } = useAuth0();
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState([]);
   const [likeID, setLikeID] = useState("");

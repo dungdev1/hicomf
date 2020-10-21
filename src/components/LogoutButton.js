@@ -1,32 +1,21 @@
-import React, { useContext } from 'react';
-
-import { AuthContext } from '../contexts/AuthContext';
-import { actionTypes } from '../reducers/authReducer';
-import { auth } from '../lib/firebase';
+import { useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
 import { Button } from '@material-ui/core';
 
-import './LogoutButton.css';
+import './AuthButton.css';
 
 function LogoutButton() {
-  const [, dispatch] = useContext(AuthContext);
-  
-  const handleLogout = () => {
-    auth.signOut().then(function() {
-      dispatch({
-        type: actionTypes.REMOVE_USER
-      }); 
-    }).catch(function(error) {
-      console.error(error);
-    }); 
-  }
+  const { isAuthenticated, logout } = useAuth0();
 
-  return (
-    <div className="logout">
-      <Button type="submit" onClick={handleLogout}>
+  return isAuthenticated && (
+    <div className="logout-button">
+      <Button 
+        onClick={() => logout({ returnTo: window.location.origin })}
+      >
         Logout
       </Button>
     </div>
-  )
+  );
 }
 
 export default LogoutButton;
