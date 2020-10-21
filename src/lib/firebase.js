@@ -1,14 +1,14 @@
 import firebase from 'firebase';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAqQxwOTW6MQRo96ExBz6LGwW-pGQs-BC0",
-  authDomain: "hicomf-d730c.firebaseapp.com",
-  databaseURL: "https://hicomf-d730c.firebaseio.com",
-  projectId: "hicomf-d730c",
-  storageBucket: "hicomf-d730c.appspot.com",
-  messagingSenderId: "389732315539",
-  appId: "1:389732315539:web:6b1ff9cefe88a5646c7866",
-  measurementId: "G-NMXNXMQXK0"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
