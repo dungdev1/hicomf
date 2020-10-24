@@ -1,53 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 import MessageSender from './MessageSender';
 import Post from './Post';
 
-import db from '../../lib/firebase';
-
 import './Feed.css';
+import Spinner from '../../components/Spinner';
 
-function Feed() {
-  const [posts, setPosts] = useState([]);
-  
-  useEffect(() => {
-    db.collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot(function(querySnapshot) {
-        let allPosts = [];
-        querySnapshot.docs.forEach((doc, index) => {
-          const post = doc.data();
-          post.id = doc.id;
-          post.user.get()
-            .then(doc => doc.data())
-            .then(userData => { post.userData = userData; })
-            .then(() => {
-              allPosts.push(post);
-              if (index === querySnapshot.docs.length - 1) {
-                setPosts(allPosts);
-              }
-            })
-        });
-      });
-  }, []);
+function Feed({ loading, error, posts }) {
+  let content;
+
+  if (loading) {
+    content = <Spinner active={true} />
+  } else if (error) {
+    content = <div>Oops... {error.message}</div>
+  } else {
+    content = (
+      <div className="feed">
+        <MessageSender />
+        <div className="posts">
+          {posts.map(post => (
+            <Post key={post.id} post={post}/>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="feed">
-      <MessageSender />
-      <div className="posts">
-        {posts.map(post => (
-          <Post
-            key={post.id}
-            postID={post.id}
-            profilePic={post.userData.photoURL}
-            image={post.image}
-            username={post.userData.displayName}
-            timestamp={post.timestamp}
-            caption={post.caption}
-          />
-        ))}
-      </div>
+    <div className="Feed">
+      {content}
     </div>
-  )
+  );
 }
 
 export default Feed;

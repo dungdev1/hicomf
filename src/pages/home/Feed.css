@@ -1,6 +1,7 @@
-.feed {
+.Feed {
   flex: 1;
-  margin-right: 25px;
+  float: left;
+  width: calc(100% - 365px);
 }
 
 @media (max-width: 899px) {

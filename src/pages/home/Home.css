@@ -6,7 +6,7 @@
 
 .home__left {
   min-width: 280px;
-  flex-basis: 500px;
+  flex-basis: 400px;
   position: sticky;
   align-self: flex-start;
   top: 0;
@@ -54,5 +54,5 @@
 }
 
 .home__main {
-  display: flex;
+  margin-top: 100px;
 }

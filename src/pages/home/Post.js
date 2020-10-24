@@ -4,78 +4,46 @@ import Button from '../../components/Button';
 import PostInteraction from './PostInteraction';
 
 import './Post.css';
+import PostPhoto from './PostPhoto';
+import { useApi } from '../../hooks/use-api';
 
-function Post({ postID, profilePic, image, username, timestamp, caption }) {
-  console.log("run");
-  return (
-    <div className="post">
-      <div className="post__top">
-        <div className="post__info">
-          <Avatar src={profilePic} className="post__avatar" />
-          <div className="post__topInfo">
-            <h3>{username}</h3>
-            <p>{new Date(timestamp?.toDate()).toLocaleString("en-US", { timeZone: 'Asia/Ho_Chi_Minh' })}</p>
+const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
+
+function Post({ post }) {
+  // Get information of post owner.
+  const { loading, error, data: profile } = useApi(post.profile, options);
+  if (profile) {
+    console.log(profile);
+    return (
+      <div className="post">
+        <div className="post__top">
+          <div className="post__info">
+            <Avatar src="" className="post__avatar" />
+            <div className="post__topInfo">
+              <h3>{profile.full_name}</h3>
+              <p>{post.time}</p>
+            </div>
+          </div>
+          <div className="post__setting">
+            <Button
+              className="button button__setting"
+              iconName="more-horiz"
+              fill="#d3d8e0"
+              stroke="#d3d8e0"
+              width="29.401"
+              height="6.918"
+            />
           </div>
         </div>
-        <div className="post__setting">
-          <Button
-            className="button button__setting"
-            iconName="more-horiz"
-            fill="#d3d8e0"
-            stroke="#d3d8e0"
-            width="29.401"
-            height="6.918"
-          />
+        <div className="post__caption">
+          <p>{post.caption}</p>
         </div>
+        {/* <PostPhoto photos={post.photos} /> */}
+        {/* <PostInteraction postID={postID} /> */}
       </div>
-      <div className="post__caption">
-        <p>{caption}</p>
-      </div>
-      {image && (
-        <div className="post__image">
-          {/* <img src="https://s.yimg.com/uu/api/res/1.2/DdytqdFTgtQuxVrHLDdmjQ--~B/aD03MTY7dz0xMDgwO3NtPTE7YXBwaWQ9eXRhY2h5b24-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/7b5b5330-112b-11ea-a77f-7c019be7ecae" alt=""/> */}
-          {/* <img src="https://vcdn-vnexpress.vnecdn.net/2020/07/12/VNE-SpaceX-5599-1594554384.jpg" alt="post image" /> */}
-          <img src={image} alt="post image" />
-        </div>
-      )}
-      <PostInteraction postID={postID} />
-      {/* <div className="post__options">
-        <div className="post__option">
-          <Button
-            className="button button__like"
-            iconName="thumb-up"
-            fill="#5085E8"
-            stroke="#5085E8"
-            strokeWidth="0.5"
-            width="33.161"
-            height="29.561"
-          />
-          <p style={{ color: "#5085E8" }}>{convertNum(numLike)}</p>
-        </div>
-        <div className="post__option">
-          <Button
-            className="button button__comment"
-            iconName="comment"
-            width="30.516"
-            height="29.314"
-            strokeWidth="0.5"
-          />
-          <p>{convertNum(numComment)}</p>
-        </div>
-        <div className="post__option">
-          <Button
-            className="button button__share"
-            iconName="share"
-            width="35.829"
-            height="29.314"
-            strokeWidth="0.5"
-          />
-          <p>{convertNum(numShare)}</p>
-        </div>
-        <div className="post__option"></div>
-      </div> */}
-    </div>
-  )
+    )
+  }
+  return <></>;
 }
 
 export default Post;

@@ -5,31 +5,32 @@ import ProfileBody from './ProfileBody';
 import ProfileHeader from './ProfileHeader';
 
 function Profile() {
-  let { userId } = useParams();
-  url = location.protocol + '//' + location.hostname + '/api/v1/profiles/'
+  // let { userId } = useParams();
+  // url = location.protocol + '//' + location.hostname + '/api/v1/profiles/'
 
 
-  const { loading, error, data , refresh } = useApi(url, {
-    audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-  });
+  // const { loading, error, data , refresh } = useApi(url, {
+  //   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  // });
 
-  if (loading) {
-    <Spinner active={true} />
-  }
+  // if (loading) {
+  //   <Spinner active={true} />
+  // }
 
-  if (error) {
-    return <div>Oops... {error.message}</div>
-  }
-  const user = {
-    name: data.first_name + data.last_name,
-    bio: data.bio,
-  }
-  return (
-    <div className="Profile">
-      <ProfileHeader user={user} profile={url} />
-      <ProfileBody />
-    </div>
-  )
+  // if (error) {
+  //   return <div>Oops... {error.message}</div>
+  // }
+  // const user = {
+  //   name: data.first_name + data.last_name,
+  //   bio: data.bio,
+  // }
+  // return (
+  //   <div className="Profile">
+  //     <ProfileHeader user={user} profile={url} />
+  //     <ProfileBody />
+  //   </div>
+  // )
+  return <></>;
 }
 
 export default Profile;

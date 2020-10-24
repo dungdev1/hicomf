@@ -11,10 +11,14 @@ export const useApi = (url, options = {}) => {
   const [refreshIndex, setRefreshIndex] = useState(0);
 
   useEffect(() => {
+    setState({
+      ...state,
+      loading: true
+    });
     (async () => {
       try {
         const { audience, scope, ...fetchOptions } = options;
-        const accessToken = getAccessTokenSilently({ audience, scope });
+        const accessToken = await getAccessTokenSilently({ audience, scope });
         const res = await fetch(url, {
           ...fetchOptions,
           headers: {
