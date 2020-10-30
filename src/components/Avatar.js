@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import './Avatar.scss';
 
-function Avatar(props) {
-  useEffect(() => {
-    // Fetch profile Pic
-  });
+function Avatar({ name, avatarUrl }) {
 
   return (
     <img className="Avatar"
-      src={props.user.avatarUrl}
-      alt={props.user.name}
+      src={avatarUrl}
+      alt={name}
     />
   );
 }

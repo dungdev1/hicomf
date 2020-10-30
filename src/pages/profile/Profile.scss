@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+.Profile {
+  display: flex;
+}
+
+.Profile__left {
+  min-width: 280px;
+  flex-basis: 400px;
+  position: sticky;
+  align-self: flex-start;
+  top: 0;
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+.Profile__right {
+  background-color: #F6F6F9;
+  font-family: 'Montserrat', sans-serif;
+}

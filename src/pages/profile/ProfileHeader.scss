@@ -1,0 +1,23 @@
+.intro {
+  display: flex;
+  // border-bottom: 2px solid #EBEBEB;
+
+  .intro_left {
+    padding: 35px 35px 0;
+  }
+
+  .intro_right {
+    margin-top: 35px;
+    .name {
+      font-weight: bold;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .biography {
+      font-size: 17px;
+      font-weight: 400;
+      opacity: .6;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+.ProfileImage {
+  height: 225px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+
+  .image {
+    width: fit-content;
+    float: left;
+    margin-right: 25px;
+    flex-grow: 1;
+    
+    img {
+      max-height: -webkit-fill-available;
+      border-radius: 10px;
+    }
+  }
+
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    width: auto;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+
+    a {
+      padding: 16px;
+    }
+  }
+
+  .prev {
+    left: 50px;
+  }
+
+  .next {
+    // right: 130px;
+    right: 50px;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .prev:hover, .next:hover {
+    background-color: #ccc;
+  }
+}
+
+.image-enter {
+  opacity: 0;
+}
+.image-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.image-exit {
+  opacity: 1;
+}
+.image-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
