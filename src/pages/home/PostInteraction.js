@@ -6,7 +6,7 @@ import Share from './Share';
 
 import './PostInteraction.css';
 
-const convertNum = (num) => {
+export const convertNum = (num) => {
   if (num > 1000000) {
     return num / 100000 + "M";
   }
