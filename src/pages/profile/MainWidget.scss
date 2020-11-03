@@ -1,0 +1,97 @@
+.MainWidget {
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-top: 30px;
+  padding: 20px;
+
+  p {
+    font-size: 17px;
+    font-weight: 400;
+  }
+
+  .component {
+    margin-bottom: 40px;
+  }
+
+  .component__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    h4 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    p {
+      color: #5085E8;
+    }
+
+    p:hover {
+      cursor: pointer;
+    }
+  }
+
+  .links {
+    display: flex;   
+    margin-top: 30px; 
+
+    .link-item {      
+      display: flex; 
+      margin-right: 30px;
+      
+      p {
+        opacity: .44;
+      }
+    }
+  }
+}
+
+.button {
+  border: 0;
+  outline-width: 0;
+  background-color: transparent;
+  margin-right: 10px;
+  padding: 0;
+}
+
+.FriendCardWidget, .SongCardWidget {
+  display: flex;
+  margin-bottom: 25px;
+  position: relative;
+  align-items: center;
+
+  .Avatar {
+    width: 50px;
+    margin-right: 20px;
+  }
+
+  .buttons {
+    position: absolute;
+    right: 0;
+
+    .message {
+      margin-right: 20px;
+    }
+  }
+
+  .info {
+    .name {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    a {
+      color: #000;
+    }
+    
+    .additional__info {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: .44;
+    }
+  }
+}
+
