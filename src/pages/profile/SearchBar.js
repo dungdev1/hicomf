@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/Button';
 
 import './SearchBar.scss';
 
 function SearchBar() {
+  const [isShown, setIsShown] = useState(false);
 
   const handleSearch = () => {
 
@@ -11,18 +12,21 @@ function SearchBar() {
 
   return (
     <div className="SearchBar">
-      <input type="text"
-        className="SearchContent"
-      />
-      <Button         
+      {isShown && (
+        <input type="text"
+          className="SearchContent"
+        />
+      )}
+      <Button
         className="button"
-        iconName="search" 
+        iconName="search"
         fill="#D3D8E0"
         stroke="#D3D8E0"
-        width="23.481" 
+        width="23.481"
         height="23.487"
         strokeWidth="1"
         onClick={handleSearch}
+        onMouseEnter={() => setIsShown(true)}
       />
     </div>
   )
