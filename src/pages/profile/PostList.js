@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Spinner from '../../components/Spinner';
 import { useApi } from '../../hooks/use-api';
 import Post from '../home/Post';
 import SearchBar from './SearchBar';
 
 import './PostList.scss';
+import { ProfileContext } from '../../contexts/ProfileContext';
 
 const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
 
-function PostList({ user }) {
+function PostList() {
+  const user = useContext(ProfileContext);
+
   const url = process.env.REACT_APP_SERVER_URL + `/api/v1/posts?profile_id=${user.profileId}`;
 
   const { loading, error, data: posts } = useApi(url, options);

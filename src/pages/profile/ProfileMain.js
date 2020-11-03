@@ -2,10 +2,10 @@ import React from 'react';
 import ProfileChronicle from './ProfileChronicle';
 import './ProfileMain.scss';
 
-function ProfileMain(props) {
+function ProfileMain() {
   return (
     <div className="ProfileMain">
-      <ProfileChronicle user={props.user} />
+      <ProfileChronicle />
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 
 import './Profile.scss';
+import ProfileContextProvider from '../../contexts/ProfileContext';
 
 function Profile() {
   let { profileId } = useParams();
@@ -26,9 +27,8 @@ function Profile() {
 
   let partsUrl = data.albums[0].split("/");
   const user = {
-    name: data.full_name,
+    data: data,
     avatarAlbumId: partsUrl[partsUrl.length - 2],
-    bio: data.bio,
     profileId: profileId,
   }
   return (
@@ -37,8 +37,10 @@ function Profile() {
         <Sidebar />
       </div>
       <div className="Profile__right">
-        <ProfileHeader {...user} />
-        <ProfileBody user={user} />
+        <ProfileContextProvider user={user}>
+          <ProfileHeader />
+          <ProfileBody />
+        </ProfileContextProvider>
       </div>      
     </div>
   );

@@ -4,12 +4,12 @@ import ProfilePost from './ProfilePost';
 import ProfileWidgets from './ProfileWidgets';
 
 
-function ProfileChronicle(props) {
+function ProfileChronicle() {
   return (
     <div className="ProfileChronicle">
       <ProfileImage />
       <div className="ChronicleMain row">
-        <ProfilePost user={props.user} className="col-8" />
+        <ProfilePost className="col-8" />
         <ProfileWidgets className="col-4" />
       </div>
     </div>
