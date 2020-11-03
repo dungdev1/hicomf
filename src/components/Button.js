@@ -3,9 +3,9 @@ import SVGIcon from './SVGIcon';
 
 import './Button.css';
 
-function Button({ className, children, disabled, iconName, onClick, ...props }) {
+function Button({ className, children, disabled, iconName, onClick, onMouseEnter, ...props }) {
   return (
-    <button disabled={disabled} className={className} onClick={onClick}>
+    <button disabled={disabled} className={className} onClick={onClick} onMouseEnter={onMouseEnter}>
       {iconName && <SVGIcon name={iconName} {...props} />}
 
       {/* Other children */}
