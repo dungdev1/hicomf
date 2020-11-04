@@ -1,13 +1,14 @@
 import React from 'react';
 import Spinner from '../../components/Spinner';
 import { useApi } from '../../hooks/use-api';
-import ProfileBody from './ProfileBody';
 import ProfileHeader from './ProfileHeader';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 
 import './Profile.scss';
 import ProfileContextProvider from '../../contexts/ProfileContext';
+import ProfileNavigation from './ProfileNavigation';
+import ProfileMain from './ProfileMain';
 
 function Profile() {
   let { profileId } = useParams();
@@ -39,7 +40,10 @@ function Profile() {
       <div className="Profile__right">
         <ProfileContextProvider user={user}>
           <ProfileHeader />
-          <ProfileBody />
+          <div className="ProfileBody">
+            <ProfileNavigation />
+            <ProfileMain />
+          </div>
         </ProfileContextProvider>
       </div>      
     </div>

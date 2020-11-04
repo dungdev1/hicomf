@@ -1,7 +1,9 @@
 import React from 'react';
+import PostForm from '../home/PostForm';
+import MainWidget from './MainWidget';
+import PostList from './PostList';
 import ProfileImage from './ProfileImage';
-import ProfilePost from './ProfilePost';
-import ProfileWidgets from './ProfileWidgets';
+import ProfileStatistic from './ProfileStatistic';
 
 
 function ProfileChronicle() {
@@ -9,8 +11,14 @@ function ProfileChronicle() {
     <div className="ProfileChronicle">
       <ProfileImage />
       <div className="ChronicleMain row">
-        <ProfilePost className="col-8" />
-        <ProfileWidgets className="col-4" />
+        <div className="ProfilePost col-8">
+          <PostForm />
+          <PostList />
+        </div>
+        <div className="ProfileWidgets col-4">
+          <ProfileStatistic />
+          <MainWidget />
+        </div>
       </div>
     </div>
   )
