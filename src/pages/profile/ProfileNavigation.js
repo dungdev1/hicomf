@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './ProfileNavigation.scss';
 
-function ProfileNavigation() {
+function ProfileNavigation({ relativeUrl }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleClick = (index) => setActiveIndex(index);
+
   return (
-    <nav className="ProfileNavigation">
-      <h3 className="active">Chronicle</h3>
-      <h3>Infomation</h3>
-      <h3>Friends</h3>
-      <h3>Photo</h3>
-      <h3>More</h3>
-    </nav>
+    <div className="ProfileNavigation">
+      <Link 
+        to={relativeUrl} 
+        onClick={() => handleClick(0)} 
+        className={activeIndex===0 && "active"}
+      >
+        Chronicle
+      </Link>
+      <Link 
+        to={relativeUrl + '/information'} 
+        onClick={() => handleClick(1)} 
+        className={activeIndex===1 && "active"}
+      >
+        Information
+      </Link>
+      <Link 
+        to={relativeUrl + '/friends'} 
+        onClick={() => handleClick(2)} 
+        className={activeIndex===2 && "active"}
+        >
+          Friends
+        </Link>
+      <Link 
+        to={relativeUrl + '/photos'} 
+        onClick={() => handleClick(3)} 
+        className={activeIndex===3 && "active"}
+      >
+        Photo
+      </Link>
+      <a>More</a>
+    </div>
   );
 }
 

@@ -77,8 +77,8 @@ const AuthenticatedAppRoutes = () => {
   return (
     <>
       <Route exact path="/" component={Home} />
-      <Route exact path="/posts/:postId" component={SinglePostPage} />
-      <Route exact path='/profiles/:profileId' component={Profile} />
+      <Route path="/posts/:postId" component={SinglePostPage} />
+      <Route path='/profiles/:profileId' component={Profile} />
     </>
   );
 }

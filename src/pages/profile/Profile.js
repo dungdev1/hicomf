@@ -10,7 +10,7 @@ import ProfileContextProvider from '../../contexts/ProfileContext';
 import ProfileNavigation from './ProfileNavigation';
 import ProfileMain from './ProfileMain';
 
-function Profile() {
+function Profile({ match }) {
   let { profileId } = useParams();
   const url = process.env.REACT_APP_SERVER_URL + '/api/v1/profiles/' + profileId + '/';
 
@@ -41,8 +41,8 @@ function Profile() {
         <ProfileContextProvider user={user}>
           <ProfileHeader />
           <div className="ProfileBody">
-            <ProfileNavigation />
-            <ProfileMain />
+            <ProfileNavigation relativeUrl={match.url} />
+            <ProfileMain relativeUrl={match.url} />
           </div>
         </ProfileContextProvider>
       </div>      

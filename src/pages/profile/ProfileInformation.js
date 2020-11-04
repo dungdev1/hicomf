@@ -1,9 +1,10 @@
 import React from 'react'
 
 function ProfileInformation() {
+  console.log(123);
   return (
-    <div>
-      
+    <div className="ProfileInformation">
+      This is Profile Infomation
     </div>
   )
 }
