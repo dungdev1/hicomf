@@ -14,7 +14,7 @@ function PostPhoto({ photos }) {
   } else if (error) {
     content = <div>Oops... {error.message}</div>
   } else {
-    content = <img src={photo.photo_url} alt="post image" />;
+    content = <img src={photo.photo_url} alt="post" />;
   }
 
   return (

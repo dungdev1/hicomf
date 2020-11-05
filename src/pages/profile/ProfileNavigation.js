@@ -14,6 +14,7 @@ function ProfileNavigation({ relativeUrl }) {
       break;
     case "photos":
       initialIndex = 3;
+      break;
     default:
       initialIndex = 0;
   }

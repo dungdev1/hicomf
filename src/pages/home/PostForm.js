@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { Avatar } from '@material-ui/core'
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
@@ -6,8 +6,6 @@ import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import UpLoadButton from '../../components/UpLoadButton';
 import EmotionButton from '../../components/EmotionButton';
 import FriendsButton from '../../components/FriendsButton';
-
-import { AuthContext } from '../../contexts/AuthContext';
 
 import firebase from 'firebase';
 import db, { firebaseApp } from '../../lib/firebase';

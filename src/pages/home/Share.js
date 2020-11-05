@@ -12,7 +12,6 @@ function Share() {
         strokeWidth="0.5"
         width="35.829"
         height="29.561"
-        className="button"
       />
       <div className="num-shares">
         0

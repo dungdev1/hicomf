@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import db from '../lib/firebase';
 
 export function useFetch(collectionPath, numRecords, isAllowLoad, setIsAllowLoad) {

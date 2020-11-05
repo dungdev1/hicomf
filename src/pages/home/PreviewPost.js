@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import './PreviewPost.css';
 
@@ -19,7 +19,7 @@ function PreviewPost(props) {
   
   return (
     <div className="preview-post">
-      <img src="" alt="Image Preview" className="image-preview__image" />
+      <img src="" alt="Preview" className="image-preview__image" />
     </div>
   );
 }

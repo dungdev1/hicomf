@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import './CommentBox.css';
 
 import Comment from './Comment';
-import db from '../../lib/firebase';
 import CommentInput from './CommentInput';
 import CommentLoadingOption from './CommentLoadingOption';
 import { useFetch } from '../../hooks/useFetch';
