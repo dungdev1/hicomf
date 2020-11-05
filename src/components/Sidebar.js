@@ -20,7 +20,9 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="logo">
-        <img src={logo} alt="Hicomf icon" />
+        <a href={window.location.origin}>
+          <img src={logo} alt="Hicomf icon" />
+        </a>
       </div>
       <div className="menu">
         <p>Menu</p>

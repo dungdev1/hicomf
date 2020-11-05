@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
+  useLocation,
 } from "react-router-dom";
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
@@ -64,16 +66,23 @@ export default function AppRoutes(props) {
 };
 
 const UnAuthenticatedAppRoutes = () => {
+  console.log("UnAuthenticated App Route");
   return (
     <>
       <Route exact path="/">
         <Login />
       </Route>
+      <Redirect to="/" />
     </>
   );
 }
 
 const AuthenticatedAppRoutes = () => {
+  const { pathname } = useLocation();
+  const nameList = pathname.split("/").filter(item => item !== "");
+  if (pathname !== "/" && (nameList.length === 1 || !["posts", "profiles"].includes(nameList[0]))) {
+    return <Redirect to="/" />;
+  }
   return (
     <>
       <Route exact path="/" component={Home} />
