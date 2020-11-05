@@ -3,8 +3,22 @@ import { Link } from 'react-router-dom';
 import './ProfileNavigation.scss';
 
 function ProfileNavigation({ relativeUrl }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-
+  const pageName = window.location.pathname.split("/").filter(item => item !== "").pop();
+  let initialIndex;
+  switch (pageName) {
+    case "information":
+      initialIndex = 1;
+      break;
+    case "friends":
+      initialIndex = 2;
+      break;
+    case "photos":
+      initialIndex = 3;
+    default:
+      initialIndex = 0;
+  }
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  
   const handleClick = (index) => setActiveIndex(index);
 
   return (
