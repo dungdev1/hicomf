@@ -35,14 +35,18 @@ export const useApi = (url, options = {}) => {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-          const data = await res.json();
-          cache[url] = data;
-          setState({
-            ...state,
-            data: data,
-            error: null,
-            loading: false
-          })
+          if (res.ok) {
+            const data = await res.json();
+            cache[url] = data;
+            setState({
+              ...state,
+              data: data,
+              error: null,
+              loading: false
+            });
+          } else if (res.status === 404) {
+            throw new Error("404 Not Found!");
+          }
         } catch (error) {
           setState({
             ...state,
