@@ -1,29 +1,19 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(0),
-    },
-  },
-  input: {
-    display: 'none',
-  },
-}));
+import Button from './Button';
 
 function FriendsButton() {
-  const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <label>
-        <IconButton component="span">
-          <PermIdentityOutlinedIcon />
-        </IconButton>
-      </label>
+    <div className="FriendButton">
+      <Button
+        iconName="friend"
+        fill="#d3d8e0"
+        stroke="#d3d8e0"
+        strokeWidth="0.6"
+        width="19.45" 
+        height="19.45"
+        className="button friend__button"
+      />
     </div>
   )
 }

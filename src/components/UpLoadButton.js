@@ -1,37 +1,39 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import InsertPhotoOutlinedIcon from '@material-ui/icons/InsertPhotoOutlined';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(0),
-    },
-  },
-  input: {
-    display: 'none',
-  },
-}));
+import React, { useRef } from 'react';
+import Button from './Button';
 
 function UpLoadButton({ onFileChange }) {
-  const classes = useStyles();
 
+  // Create a reference to the hidden file input  element.
+  const hiddenFileInput = useRef(null);
+
+  // Click the hidden file when button is clicked.
+  const handleClick = event => {
+    hiddenFileInput.current.click();
+  }
+
+  // Handle input file.
   const handleChange = (e) => {
     const file = e.target.files[0];
     onFileChange(file);
   };
 
   return (
-    <div className={classes.root}>
-      <input accept="image/*" className={classes.input} id="icon-button-file" 
+    <div className="UploadButton">
+      <Button
+        iconName="photo"
+        fill="#d3d8e0"
+        stroke="#d3d8e0"
+        strokeWidth="0.6"
+        width="22.8922"
+        height="19.44885"
+        onClick={handleClick}
+        className="button photo__button"
+      />
+      <input accept="image/*" id="icon-button-file"
         type="file"
-        onChange={handleChange} />
-      <label htmlFor="icon-button-file">
-        <IconButton aria-label="upload picture" component="span">
-          <InsertPhotoOutlinedIcon />
-        </IconButton>
-      </label>
+        ref={hiddenFileInput}
+        onChange={handleChange}
+        style={{display: "none"}} />
     </div>
   )
 }

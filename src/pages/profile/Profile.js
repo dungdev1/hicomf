@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Spinner from '../../components/Spinner';
 import { useApi } from '../../hooks/use-api';
 import ProfileHeader from './ProfileHeader';
@@ -18,6 +18,12 @@ function Profile({ match }) {
 
   const { loading, error, data } = useApi(url, {
     audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  });
+
+  useEffect(() => {
+    if (data) {
+      document.title = data.full_name;
+    }
   });
 
   if (loading) {

@@ -28,6 +28,10 @@
   align-items: center;
 }
 
+.form__upload-option {
+  margin-left: 5px;
+}
+
 .form__upload-option .MuiIconButton-root {
   padding: 10px;
 }
@@ -46,9 +50,4 @@
 .form__live-input-option:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.04);
-}
-
-#uploader {
-  display: none;
-  width: 100%;
 }
