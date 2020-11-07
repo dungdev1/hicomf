@@ -6,10 +6,10 @@ import Post from './Post';
 import './Feed.css';
 import Spinner from '../../components/Spinner';
 
-function Feed({ loading, error, posts }) {
+function Feed({ status, error, posts }) {
   let content;
 
-  if (loading) {
+  if (status === 'loading') {
     content = <Spinner active={true} />
   } else if (error) {
     content = <div>Oops... {error.message}</div>

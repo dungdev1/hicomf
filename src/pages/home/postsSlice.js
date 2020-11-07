@@ -1,23 +1,40 @@
-import { createSlice, createEntityAdapter, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { usePostApi } from '../../hooks/usePostAPI';
-
-const postsAdapter = createEntityAdapter({
-  sortComparer: (a, b) => b.time.localeCompare(a.time)
-});
-
-const initialState = postsAdapter.getInitialState({
+const initialState = {
+  posts: [],
   status: 'idle',
   error: null
-});
+};
 
 const url = process.env.REACT_APP_SERVER_URL + '/api/v1/posts/';
-const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const data = usePostApi(url, options);
-  return data;
-});
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', 
+  async accessToken => {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+    })
+    const data = await res.json();
+    return data;
+  }
+);
+
+export const addNewPost = createAsyncThunk('posts/addNewPost',
+  async ({accessToken, initialPost}) => {
+    const res = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(initialPost),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      }
+    });
+    const data = await res.json();
+    return data;
+  }
+);
 
 // Create a "slice" contains the logic and actions.
 const postsSlice = createSlice({
@@ -30,12 +47,15 @@ const postsSlice = createSlice({
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.status = 'succeeded'
-      postsAdapter.upsertMany(state, action.payload);
+      state.posts = state.posts.concat(action.payload);
     },
     [fetchPosts.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message
     },
+    [addNewPost.fulfilled]: (state, action) => {
+      state.posts.push(action.payload);
+    }
   }
 });
 
@@ -43,8 +63,7 @@ export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;
 
-export const {
-  selectAll: selectAllPosts,
-  selectById: selectPostById,
-  selectIds: selectPostIds
-} = postsAdapter.getSelectors(state => state.posts);
+export const selectAllPosts = state => state.posts.posts;
+export const selectPostById = (state, postId) => {
+  return state.posts.posts.find(post => post.id === postId);
+};

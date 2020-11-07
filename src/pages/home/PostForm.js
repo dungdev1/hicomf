@@ -8,16 +8,27 @@ import FriendsButton from '../../components/FriendsButton';
 import './PostForm.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { firebaseApp } from '../../lib/firebase';
+import { useDispatch } from 'react-redux';
+import { addNewPost } from './postsSlice';
+
+const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
 
 function PostForm(props) {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [data, setData] = useState({}); // Include caption and image URL
   const textRef = useRef(null);
+
+  const { audience, scope } = options;
+  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!(Object.keys(data).length === 0 && data.constructor === Object)) {
       // Send data to server
-      console.log(data);
+      (async () => {
+        const accessToken = await getAccessTokenSilently({audience, scope});
+        dispatch(addNewPost({accessToken, initialPost: data}));
+      })()
     }
   }, [data])
 
@@ -58,7 +69,7 @@ function PostForm(props) {
             .then((url) => {
               setData({
                 ...data,
-                imageUrl: url,
+                imageUrl: [url],
                 caption: props.caption,                
               });
             });
