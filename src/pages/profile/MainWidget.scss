@@ -46,14 +46,11 @@
       }
     }
   }
-}
 
-.button {
-  border: 0;
-  outline-width: 0;
-  background-color: transparent;
-  margin-right: 10px;
-  padding: 0;
+  button {    
+    margin-right: 10px;
+    padding: 0;
+  }
 }
 
 .FriendCardWidget, .SongCardWidget {

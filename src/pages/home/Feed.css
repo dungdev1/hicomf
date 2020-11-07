@@ -1,7 +1,8 @@
 .Feed {
   flex: 1;
   float: left;
-  width: calc(100% - 365px);
+  /* width: calc(100% - 365px); */
+  width: 550px;
 }
 
 @media (max-width: 899px) {

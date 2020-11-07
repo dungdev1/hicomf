@@ -18,7 +18,7 @@
   margin-right: 10px;
 }
 
-.button {
+.post__interact.button {
   border: 0;
   outline-width: 0;
   background-color: transparent;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PostForm from '../home/PostForm';
+import MessageSender from '../home/MessageSender';
 import MainWidget from './MainWidget';
 import PostList from './PostList';
 import ProfileImage from './ProfileImage';
@@ -12,7 +12,7 @@ function ProfileChronicle() {
       <ProfileImage />
       <div className="ChronicleMain row">
         <div className="ProfilePost col-8">
-          <PostForm />
+          <MessageSender />
           <PostList />
         </div>
         <div className="ProfileWidgets col-4">

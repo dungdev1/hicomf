@@ -5,13 +5,14 @@
   align-items: center;
   border-radius: 10px;
   border: 2px solid #EBEBEB;
-  box-shadow: 0 3px 1px #EBEBEB;
+  box-shadow: 0 1.5px 1px #E8EAEE;
   font-weight: 400;
 }
 
-.post-form > form {
+.post-form .form {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   margin-left: 10px;
 }
@@ -50,4 +51,48 @@
 .form__live-input-option:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+#uploader {
+  display: none;
+  width: 100%;
+}
+
+.textarea {
+  display: block;
+  resize: both;
+  min-height: 20px;
+  line-height: 20px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  width: 400px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "What's on your mind?";
+  color: gray;
+  cursor: text;
+}
+
+.form-top {
+  margin-top: 10px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #E8EAEE;
+}
+
+.form-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.post__button {
+  padding: 8px 15px;
+  background-color: #5085E8;
+  border-radius: 30px;
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 18px;
 }
