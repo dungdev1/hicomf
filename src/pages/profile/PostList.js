@@ -21,13 +21,16 @@ function PostList() {
   } else if (error) {
     return <div>Oops... {error.message}</div>;
   } else {
+    const orderedPosts = posts
+      .slice()
+      .sort((a, b) => b.time.localeCompare(a.date));
     return (
       <div className="PostList">
         <div className="PostSearchBar">
           <h3>Publications</h3>
           <SearchBar />
         </div>
-        {posts.map(post => (
+        {orderedPosts.map(post => (
           <Post key={post.id} post={post} />
         ))}
       </div>
