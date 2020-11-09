@@ -7,8 +7,11 @@ import './Feed.css';
 import Spinner from '../../components/Spinner';
 
 function Feed({ status, error, posts }) {
-  let content;
+  const orderedPosts = posts
+    .slice()
+    .sort((a, b) => b.time.localeCompare(a.date));
 
+  let content;
   if (status === 'loading') {
     content = <Spinner active={true} />
   } else if (error) {
@@ -18,7 +21,7 @@ function Feed({ status, error, posts }) {
       <div className="feed">
         <MessageSender />
         <div className="posts">
-          {posts.map(post => (
+          {orderedPosts.map(post => (
             <Post key={post.id} post={post}/>
           ))}
         </div>
