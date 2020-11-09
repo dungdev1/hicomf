@@ -1,58 +1,50 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useState, useEffect, useContext } from 'react';
 import Button from '../../components/Button';
-import { AuthContext } from '../../contexts/AuthContext';
+import { UserContext } from '../../AppRoutes';
 
-import db from '../../lib/firebase';
+import { callApi } from '../../utils';
+import LikeUser from './LikeUser';
 
-function Like(props) {
-  const { user } = useAuth0();
+function Like({ numLikes, postId }) {
+  const { getAccessTokenSilently } = useAuth0();
+  const userInfor = useContext(UserContext)
   const [isLiked, setIsLiked] = useState(false);
-  const [likes, setLikes] = useState([]);
-  const [likeID, setLikeID] = useState("");
+  const [likeID, setLikeID] = useState(null);
+  const [likesNumber, setLikesNumber] = useState(numLikes); // serve for user when they like or unlike.
 
   useEffect(() => {
-    db.collection(`posts/${props.postID}/likes`)
-    .onSnapshot(function(querySnapshot) {
-      if (querySnapshot.docs.length === 0) {
-        setLikes([]);
+    userInfor['liked_postsId'].forEach((like_post_obj) => {
+      if (like_post_obj['post_id'] === postId) {
+        setIsLiked(true);
+        setLikeID(like_post_obj['like_id'])
       }
-      let allLikes = [];
-      querySnapshot.docs.forEach((doc, index) => {
-        const like = doc.data();
-        like.id = doc.id;
-        like.user.get()
-        .then(doc => doc.data())
-        .then(userData => {like.userData = userData})
-        .then(() => {
-          allLikes.push(like);
-          if (index === querySnapshot.docs.length - 1) {
-            setLikes(allLikes);
-            if (allLikes.length > 0) {
-              allLikes.forEach(like => {
-                if (like.user.id === user.uid) {
-                  setIsLiked(true);
-                  setLikeID(like.id);
-                }
-              });
-            }   
-          }
-        });
-      });
     });
-  }, [])
+  }, []);
 
   const handleClick = () => {
     setIsLiked(!isLiked);
     if (!isLiked) {
-      db.collection(`posts/${props.postID}/likes`).add({
-        user: db.doc('users/' + user.uid)
-      })
+      const url = process.env.REACT_APP_SERVER_URL + `/api/v1/posts/${postId}/likes/`;
+      const options = {
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      };
+      callApi(url, options, getAccessTokenSilently).then(res => setLikeID(res['id']));
+      setLikesNumber(likesNumber + 1)
     } else {
-      db.doc(`posts/${props.postID}/likes/${likeID}`).delete().then(function() {
-        console.log("Document successfully deleted!");
-        setIsLiked(false);
-      });
+      const url = process.env.REACT_APP_SERVER_URL + `/api/v1/posts/${postId}/likes/${likeID}/`;
+      const options = {
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+        method: 'DELETE',
+      };
+      callApi(url, options, getAccessTokenSilently);
+      setLikeID('');
+      setIsLiked(false);
+      setLikesNumber(likesNumber - 1);
     }
   }
 
@@ -61,17 +53,15 @@ function Like(props) {
       <Button
         className="button button__like"
         iconName="thumb-up"
-        fill={isLiked ? "#5085E8" : "D3D8E0"}
-        stroke={isLiked ? "#5085E8" : "D3D8E0"}
+        fill={isLiked ? "#5085E8" : "#D3D8E0"}
+        stroke={isLiked ? "#5085E8" : "#D3D8E0"}
         strokeWidth="0.5"
         width="33.161"
         height="29.561"
         onClick={handleClick}
         className="button"
       />
-      <div className="num_likes">
-        {props.convertNum(likes.length)}
-      </div>
+      <LikeUser likesNumber={likesNumber} postId={postId} />
     </>
   )
 }

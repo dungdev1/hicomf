@@ -6,19 +6,7 @@ import Share from './Share';
 
 import './PostInteraction.css';
 
-export const convertNum = (num) => {
-  if (num > 1000000) {
-    return num / 100000 + "M";
-  }
-  else if (num > 1000) {
-    return num / 1000 + "k";
-  }
-  else {
-    return num;
-  }
-};
-
-function PostInteraction(props) {
+function PostInteraction({ likesUrl, commentsUrl, sharesUrl, numLikes, numComments, numShares, postId }) {
   const [isOpenCommentBox, setIsOpenCommentBox] = useState(false);
 
   function handleOpenCommentBox() {
@@ -29,21 +17,23 @@ function PostInteraction(props) {
     <div className="post__interact">
       <div className="post__options">
         <div className="post__option">
-          <Like postID={props.postID} convertNum={convertNum} />
+          <Like numLikes={numLikes} postId={postId} />
         </div>
         <div className="post__option">
           <CommentButton 
-            postID={props.postID} 
-            convertNum={convertNum}
+            commentsUrl={commentsUrl}
             onOpenCommenBoxChange={handleOpenCommentBox}  />
         </div>   
         <div className="post__option">
-          <Share />
+          <Share 
+            sharesUrl={sharesUrl}
+            numShares={numShares}            
+          />
         </div>
       </div>
-      {isOpenCommentBox && 
+      {/* {isOpenCommentBox && 
         <CommentBox postID={props.postID} />
-      }
+      } */}
     </div>
   )
 }

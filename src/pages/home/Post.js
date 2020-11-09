@@ -5,6 +5,8 @@ import PostInteraction from './PostInteraction';
 
 import './Post.css';
 import PostPhoto from './PostPhoto';
+import TimeAgo from '../../components/TimeAgo';
+import Mode from '../../components/Mode';
 
 function Post({ post }) {
   return (
@@ -14,7 +16,10 @@ function Post({ post }) {
           <Avatar src={post.owner_pic} className="post__avatar" />
           <div className="post__topInfo">
             <h3>{post.owner_name}</h3>
-            <p>{post.time}</p>
+            <div className="add__info">
+              <TimeAgo time={post.time} />
+              <Mode mode={"Public"} />
+            </div>
           </div>
         </div>
         <div className="post__setting">
@@ -31,8 +36,16 @@ function Post({ post }) {
       <div className="post__caption">
         <p>{post.caption}</p>
       </div>
-      <PostPhoto photos={post.photos} />
-      {/* <PostInteraction postID={postID} /> */}
+      {post.photos.length > 0 && <PostPhoto photos={post.photos} />}      
+      <PostInteraction
+        likesUrl={post.likes}
+        commentsUrl={post.comments}
+        sharesUrl={post.shares}
+        numLikes={post.num_likes}
+        numComments={post.num_comments}
+        numShares={post.num_shares}
+        postId={post.id}
+      />
     </div>
   );
 }

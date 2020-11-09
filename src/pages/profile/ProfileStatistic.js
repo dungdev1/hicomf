@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertNum } from '../home/PostInteraction';
+import { convertNum } from '../../utils';
 
 import './ProfileStatistic.scss';
 

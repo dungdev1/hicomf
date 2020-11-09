@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button';
 
 import db from '../../lib/firebase';
+import { convertNum } from '../../utils';
 
-function CommentButton({ postID, convertNum, onOpenCommenBoxChange }) {
+function CommentButton({ postID, onOpenCommenBoxChange }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {

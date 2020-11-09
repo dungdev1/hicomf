@@ -79,6 +79,7 @@ function PostForm(props) {
         }
       );
     } else {
+      console.log("run");
       textRef.current.innerText = "";
       props.onCaptionChange("");
       setData({
