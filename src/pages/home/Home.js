@@ -22,27 +22,20 @@ function usePrevious(value) {
 
 function Home() {
   // const { loading, error, refresh, data: posts } = useApi(url, options);
-  const { audience, scope } = options;
-  const [refreshIndex, setRefreshIndex] = useState(0);
-
-  const { getAccessTokenSilently } = useAuth0();
-
-  const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
-
-  const postStatus = useSelector(state => state.posts.status);
   const error = useSelector(state => state.posts.error);
+  const postStatus = useSelector(state => state.posts.status);
 
-  useEffect(() => {
-    (async () => {
-      if (postStatus === 'idle') {
-        const accessToken = await getAccessTokenSilently({audience, scope});
-        dispatch(fetchPosts(accessToken));
-      }      
-    })();
-  }, [postStatus, dispatch]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (postStatus === 'idle') {
+  //       const accessToken = await getAccessTokenSilently({audience, scope});
+  //       dispatch(fetchPosts(accessToken));
+  //     }      
+  //   })();
+  // }, [postStatus, dispatch]);
 
-  const refresh = () => setRefreshIndex(refreshIndex + 1);
+  const refresh = () => {};
 
   return (
     <div className="home">

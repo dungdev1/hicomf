@@ -11,6 +11,8 @@ import Home from './pages/home/Home';
 import SinglePostPage from "./pages/home/SinglePostPage";
 import Profile from "./pages/profile/Profile";
 import LoadingBar from "./components/LoadingBar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "./pages/home/postsSlice";
 
 export const UserContext = createContext();
 
@@ -59,7 +61,9 @@ export default function AppRoutes({ user, getAccessTokenSilently }) {
     <Router>
       <Switch>
         {user
-          ? <AuthenticatedAppRoutes userInfor={state.data} />
+          ? <AuthenticatedAppRoutes 
+              userInfor={state.data} 
+              getAccessTokenSilently={getAccessTokenSilently} />
           : <UnAuthenticatedAppRoutes />}
       </Switch>
     </Router>
@@ -78,12 +82,28 @@ const UnAuthenticatedAppRoutes = () => {
   );
 }
 
-const AuthenticatedAppRoutes = ({ userInfor }) => {
+const AuthenticatedAppRoutes = ({ userInfor, getAccessTokenSilently }) => {
   const { pathname } = useLocation();
+  const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
+  const { audience, scope } = options;
+
+  const dispatch = useDispatch();
+  const postStatus = useSelector(state => state.posts.status);
+
+  useEffect(() => {
+    (async () => {
+      if (postStatus === 'idle') {
+        const accessToken = await getAccessTokenSilently({audience, scope});
+        dispatch(fetchPosts(accessToken));
+      }      
+    })();
+  }, [postStatus, dispatch]);
+
   const nameList = pathname.split("/").filter(item => item !== "");
   if (pathname !== "/" && (nameList.length === 1 || !["posts", "profiles"].includes(nameList[0]))) {
     return <Redirect to="/" />;
   }
+
   return (
     <UserContext.Provider value={userInfor}>
       <Route exact path="/" component={Home} />
