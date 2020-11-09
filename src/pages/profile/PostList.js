@@ -6,21 +6,14 @@ import SearchBar from './SearchBar';
 
 import './PostList.scss';
 import { ProfileContext } from '../../contexts/ProfileContext';
-
-const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
+import { useSelector } from 'react-redux';
+import { selectPostsByUser } from '../home/postsSlice';
 
 function PostList() {
   const user = useContext(ProfileContext);
+  const posts = useSelector(state => selectPostsByUser(state, user.profileId));
 
-  const url = process.env.REACT_APP_SERVER_URL + `/api/v1/posts?profile_id=${user.profileId}`;
-
-  const { loading, error, data: posts } = useApi(url, options);
-
-  if (loading) {
-    return <Spinner active={true} />
-  } else if (error) {
-    return <div>Oops... {error.message}</div>;
-  } else {
+  if (posts) {
     const orderedPosts = posts
       .slice()
       .sort((a, b) => b.time.localeCompare(a.date));
@@ -35,6 +28,8 @@ function PostList() {
         ))}
       </div>
     );
+  } else {
+    return <></>;
   }
 }
 
