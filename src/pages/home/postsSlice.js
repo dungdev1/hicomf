@@ -67,3 +67,9 @@ export const selectAllPosts = state => state.posts.posts;
 export const selectPostById = (state, postId) => {
   return state.posts.posts.find(post => post.id === postId);
 };
+export const selectPostsByUser = (state, profielId) => {
+  return state.posts.posts.filter(post => {
+    const nameList = post.profile.split("/").filter(item => item !== "");
+    return nameList[nameList.length - 1] === profielId;
+  });
+}
