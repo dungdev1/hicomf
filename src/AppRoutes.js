@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,68 +8,59 @@ import {
 } from "react-router-dom";
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
-import { useAuth0 } from "@auth0/auth0-react";
 import SinglePostPage from "./pages/home/SinglePostPage";
 import Profile from "./pages/profile/Profile";
 import LoadingBar from "./components/LoadingBar";
-import { useApi } from "./hooks/use-api";
 
 export const UserContext = createContext();
 
-export default function AppRoutes(props) {
-  const { isLoading, error, user, getAccessTokenSilently } = useAuth0();
+export default function AppRoutes({ user, getAccessTokenSilently }) {
 
-  const url = process.env.REACT_APP_SERVER_URL + '/api/v1/user/';
-  const { loading, userError, data:userInfor } = useApi(url, {
-    audience: process.env.REACT_APP_AUTH0_AUDIENCE
+  const [state, setState] = useState({
+    error: null,
+    loading: true,
+    data: null,
   });
-  
-  if (user && user['https://myapp.example.com/is_new']) {
-    const profileData = {
-      'first_name': user.given_name,
-      'last_name': user.family_name,
-      'email': user.email,
-      'user_avatar': user.picture,
-    }
-    const url = process.env.REACT_APP_SERVER_URL + '/api/v1/profiles/';
-    let options = {
-      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-      method: 'POST',
-      body: JSON.stringify(profileData),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    };
-    (async () => {
-      try {
-        const { audience, scope, ...fetchOptions } = options;
-        const accessToken = await getAccessTokenSilently({ audience, scope });
-        const res = await fetch(url, {
-          ...fetchOptions,
-          headers: {
-            ...fetchOptions.headers,
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        console.log(await res.json());
-      } catch (error) {
-        console.error(error.message);
-      }
-    })();
-  };
 
-  if (isLoading || loading) {
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        const url = process.env.REACT_APP_SERVER_URL + '/api/v1/user/';
+  
+        try {
+          const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+          const accessToken = await getAccessTokenSilently({ audience });
+          const res = await fetch(url, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setState({ ...state, data: data, error: null, loading: false });
+          } else if (res.status === 404) {
+            throw new Error("404 Not Found!");
+          }
+        } catch (error) {
+          setState({ ...state, error, loading: false });
+        }
+      })();
+    }
+  }, []);
+
+  if (state.loading && user) {
     return <LoadingBar active={true} />;
   }
-  if (error || userError) {
-    return <div>Oops... {error.message}</div>
+  if (state.error) {
+    return <div>Oops... {state.error.message}</div>
   }
+
   return (
     <Router>
       <Switch>
-        {user 
-        ? <AuthenticatedAppRoutes user={user} userInfor={userInfor} /> 
-        : <UnAuthenticatedAppRoutes />}
+        {user
+          ? <AuthenticatedAppRoutes userInfor={state.data} />
+          : <UnAuthenticatedAppRoutes />}
       </Switch>
     </Router>
   );
@@ -87,14 +78,14 @@ const UnAuthenticatedAppRoutes = () => {
   );
 }
 
-const AuthenticatedAppRoutes = ({ user, userInfor }) => {
+const AuthenticatedAppRoutes = ({ userInfor }) => {
   const { pathname } = useLocation();
   const nameList = pathname.split("/").filter(item => item !== "");
   if (pathname !== "/" && (nameList.length === 1 || !["posts", "profiles"].includes(nameList[0]))) {
     return <Redirect to="/" />;
   }
   return (
-    <UserContext.Provider value={userInfor || user}>
+    <UserContext.Provider value={userInfor}>
       <Route exact path="/" component={Home} />
       <Route path="/posts/:postId" component={SinglePostPage} />
       <Route path='/profiles/:profileId' component={Profile} />
