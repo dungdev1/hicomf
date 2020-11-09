@@ -7,6 +7,7 @@ import './Post.css';
 import PostPhoto from './PostPhoto';
 import TimeAgo from '../../components/TimeAgo';
 import Mode from '../../components/Mode';
+import PostOwner from './PostOwner';
 
 function Post({ post }) {
   return (
@@ -15,7 +16,7 @@ function Post({ post }) {
         <div className="post__info">
           <Avatar src={post.owner_pic} className="post__avatar" />
           <div className="post__topInfo">
-            <h3>{post.owner_name}</h3>
+            <PostOwner ownerName={post.owner_name} postId={post.id} profileEndpoint={post.profile} />
             <div className="add__info">
               <TimeAgo time={post.time} />
               <Mode mode={"Public"} />
