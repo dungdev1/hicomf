@@ -14,12 +14,14 @@ function Like({ numLikes, postId }) {
   const [likesNumber, setLikesNumber] = useState(numLikes); // serve for user when they like or unlike.
 
   useEffect(() => {
-    userInfor['liked_postsId'].forEach((like_post_obj) => {
-      if (like_post_obj['post_id'] === postId) {
-        setIsLiked(true);
-        setLikeID(like_post_obj['like_id'])
-      }
-    });
+    if (Object.keys(userInfor).length > 0) {
+      userInfor['liked_postsId'].forEach((like_post_obj) => {
+        if (like_post_obj['post_id'] === postId) {
+          setIsLiked(true);
+          setLikeID(like_post_obj['like_id'])
+        }
+      });
+    }
   }, []);
 
   const handleClick = () => {
