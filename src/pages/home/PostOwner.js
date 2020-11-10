@@ -24,8 +24,8 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
 
 
   useEffect(() => {
+    let mounted = true;
     if (isShown && Object.keys(state["profileInfo"]).length === 0) {
-
       (async () => {
         try {
           const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
@@ -37,24 +37,29 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
           });
           if (res.ok) {
             const data = await res.json();
-            setState({
-              ...state,
-              profileInfo: data,
-              error: null,
-              loading: false
-            });
+            if (mounted) {
+              setState({
+                ...state,
+                profileInfo: data,
+                error: null,
+                loading: false
+              });
+            }
           } else if (res.status === 404) {
             throw new Error("404 Not Found!");
           }
         } catch (error) {
-          setState({
-            ...state,
-            error,
-            loading: false
-          });
+          if (mounted) {
+            setState({
+              ...state,
+              error,
+              loading: false
+            });
+          }
         }
       })();
     }
+    return () => mounted = false;
   })
 
   const redirectHandler = () => {
