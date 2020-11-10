@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import AppRoutes from './AppRoutes';
@@ -7,6 +7,31 @@ import LoadingBar from './components/LoadingBar';
 
 function App() {
   const { isLoading, error, user, getAccessTokenSilently } = useAuth0();
+  const [state, setState] = useState(false);
+
+  if (isLoading) {
+    return <LoadingBar active={true} />;
+  }
+  if (error) {
+    return <div>Oops... {error.message}</div>
+  }
+
+  async function postUserData(url, options) {
+    try {
+      const { audience, scope, ...fetchOptions } = options;
+      const accessToken = await getAccessTokenSilently({ audience, scope });
+      const res = await fetch(url, {
+        ...fetchOptions,
+        headers: {
+          ...fetchOptions.headers,
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return await res.json();
+    } catch (error) {
+      return error.message;
+    }
+  }
 
   if (user && user['https://myapp.example.com/is_new']) {
     const profileData = {
@@ -24,36 +49,19 @@ function App() {
         'Content-Type': 'application/json',
       }
     };
-    (async () => {
-      try {
-        const { audience, scope, ...fetchOptions } = options;
-        const accessToken = await getAccessTokenSilently({ audience, scope });
-        const res = await fetch(url, {
-          ...fetchOptions,
-          headers: {
-            ...fetchOptions.headers,
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        console.log(await res.json());
-      } catch (error) {
-        console.error(error.message);
-      }
-    })();
+
+    postUserData(url, options).then(() => {
+      setState(true);
+    })
+  } else {
+    setState(true);
   }
 
-  if (isLoading) {
-    return <LoadingBar active={true} />;
-  }
-  if (error) {
-    return <div>Oops... {error.message}</div>
-  }
-
-  return (
+  return state ? (
     <div className="app">
       <AppRoutes user={user} getAccessTokenSilently={getAccessTokenSilently} />
     </div>
-  )
+  ) : <LoadingBar active={true} />;
 }
 
 export default App;
