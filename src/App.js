@@ -1,20 +1,14 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import AppRoutes from './AppRoutes';
 import LoadingBar from './components/LoadingBar';
+import Login from './pages/login/Login';
 
 function App() {
   const { isLoading, error, user, getAccessTokenSilently } = useAuth0();
   const [state, setState] = useState(false);
-
-  if (isLoading) {
-    return <LoadingBar active={true} />;
-  }
-  if (error) {
-    return <div>Oops... {error.message}</div>
-  }
 
   async function postUserData(url, options) {
     try {
@@ -33,28 +27,41 @@ function App() {
     }
   }
 
-  if (user && user['https://myapp.example.com/is_new']) {
-    const profileData = {
-      'first_name': user.given_name,
-      'last_name': user.family_name,
-      'email': user.email,
-      'user_avatar': user.picture,
-    }
-    const url = process.env.REACT_APP_SERVER_URL + '/api/v1/profiles/';
-    let options = {
-      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-      method: 'POST',
-      body: JSON.stringify(profileData),
-      headers: {
-        'Content-Type': 'application/json',
+  useEffect(() => {
+    if (user && user['https://myapp.example.com/is_new']) {
+      const profileData = {
+        'first_name': user.given_name,
+        'last_name': user.family_name,
+        'email': user.email,
+        'user_avatar': user.picture,
       }
-    };
+      const url = process.env.REACT_APP_SERVER_URL + '/api/v1/profiles/';
+      let options = {
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+        method: 'POST',
+        body: JSON.stringify(profileData),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      };
 
-    postUserData(url, options).then(() => {
+      postUserData(url, options).then(() => {
+        setState(true);
+      })
+    } else {
       setState(true);
-    })
-  } else {
-    setState(true);
+    }
+  }, [user]);
+
+  if (isLoading) {
+    return <LoadingBar active={true} />;
+  }
+  if (error) {
+    return <div>Oops... {error.message}</div>
+  }
+
+  if (!user) {
+    return <Login />;
   }
 
   return state ? (
