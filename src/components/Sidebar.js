@@ -15,14 +15,20 @@ import Amazon_A_Smile from '../assets/images/Amazon.com_A_Smile.svg';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import './Sidebar.css';
+import { useHistory } from 'react-router-dom';
 
 function Sidebar() {
+  const history = useHistory();
+
   return (
     <div className="sidebar">
       <div className="logo">
-        <a href={window.location.origin}>
+        <div 
+          style={{cursor: "pointer"}}
+          onClick={() => history.push('/')}
+        >
           <img src={logo} alt="Hicomf icon" />
-        </a>
+        </div>
       </div>
       <div className="menu">
         <p>Menu</p>

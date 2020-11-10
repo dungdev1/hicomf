@@ -2,6 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import Button from '../../components/Button';
 import Spinner from '../../components/Spinner';
@@ -17,6 +18,7 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
     loadng: true,
     profileInfo: {}
   });
+  let history = useHistory();
 
   const nameList = profileEndpoint.split("/").filter(item => item !== "");
 
@@ -54,6 +56,10 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
       })();
     }
   })
+
+  const redirectHandler = () => {
+    history.push(`/profiles/${nameList[nameList.length - 1]}`);
+  }
 
   if (state["loading"]) {
     return <Spinner active={true} />;
@@ -122,9 +128,14 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      <a href={`${window.location.href}profiles/${nameList[nameList.length - 1]}`}>
+      <h3
+        onClick={redirectHandler}
+      >
         {ownerName}
-      </a>
+      </h3>
+      {/* <a href={`${window.location.href}profiles/${nameList[nameList.length - 1]}`}>
+        {ownerName}
+      </a> */}
       <div className="summary-box tooltiptext">
         {summaryContent}
       </div>
