@@ -1,6 +1,6 @@
 import { Avatar } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext } from '../../contexts/UserContext';
 
 import db from '../../lib/firebase';
 import firebase from 'firebase';

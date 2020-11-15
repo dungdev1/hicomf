@@ -1,14 +1,14 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useState, useEffect, useContext } from 'react';
 import Button from '../../components/Button';
-import { UserContext } from '../../AppRoutes';
+import { UserInforContext } from '../../AppRoutes';
 
 import { callApi } from '../../utils';
 import LikeUser from './LikeUser';
 
 function Like({ numLikes, postId }) {
   const { getAccessTokenSilently } = useAuth0();
-  const userInfor = useContext(UserContext)
+  const [userInfor, setUserInfor] = useContext(UserInforContext);
   const [isLiked, setIsLiked] = useState(false);
   const [likeID, setLikeID] = useState(null);
   const [likesNumber, setLikesNumber] = useState(numLikes); // serve for user when they like or unlike.

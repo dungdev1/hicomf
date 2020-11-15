@@ -10,13 +10,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { firebaseApp } from '../../lib/firebase';
 import { useDispatch } from 'react-redux';
 import { addNewPost } from './postsSlice';
-import { UserContext } from '../../AppRoutes';
+import { UserInforContext } from '../../AppRoutes';
 
 const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
 
 function PostForm(props) {
   const { getAccessTokenSilently } = useAuth0();
-  const userInfo = useContext(UserContext);
+  const [userInfor, setUserInfor] = useContext(UserInforContext);
 
   const [data, setData] = useState({}); // Include caption and image URL
   const textRef = useRef(null);
@@ -93,7 +93,7 @@ function PostForm(props) {
     <>
       <progress value="0" max="100" id="uploader">0%</progress>
       <div className="post-form">
-        <Avatar style={{ width: "40px", alignSelf: "flex-start" }} avatarUrl={userInfo.avatar} />
+        <Avatar style={{ width: "40px", alignSelf: "flex-start" }} avatarUrl={userInfor.avatar} />
         <div className="form">
           <div className="form-top">
             <span

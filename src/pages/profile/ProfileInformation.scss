@@ -1,0 +1,77 @@
+.ProfileInformation {
+  padding: 40px 45px;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #5085E8;
+
+  div:not(:last-child) {
+    margin-right: 40px;
+    padding: 7px 25px;
+    border-radius: 20px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #3C5A99;
+      color: #fff;
+    }
+  }
+
+  .active {
+    background-color: #3C5A99;
+    color: #fff;
+  }
+
+  .editProfile {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    color: #000;
+    background-color: #ccc;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    .icon {
+      display: inline;
+      margin-right: 7px;
+    }
+  }
+}
+
+.Overview {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  font-size: 15px;
+
+  .item {
+    padding: 25px;
+    background-color: #ffffff;
+    margin-right: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px #ccc;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .icon {
+      margin-right: 25px;
+    }
+
+    .infor div {
+      &:last-child {
+        color: #5085E8;
+      }
+    }
+  }
+}

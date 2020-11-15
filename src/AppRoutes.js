@@ -14,15 +14,10 @@ import LoadingBar from "./components/LoadingBar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "./pages/home/postsSlice";
 
-export const UserContext = createContext();
+export const UserInforContext = createContext();
 
 export default function AppRoutes({ user, getAccessTokenSilently }) {
-
-  const [state, setState] = useState({
-    error: null,
-    loading: true,
-    data: null,
-  });
+  const [userInfor, setUserInfor] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -39,30 +34,28 @@ export default function AppRoutes({ user, getAccessTokenSilently }) {
           });
           if (res.ok) {
             const data = await res.json();
-            setState({ ...state, data: data, error: null, loading: false });
+            setUserInfor(data);
           } else if (res.status === 404) {
             throw new Error("404 Not Found!");
           }
         } catch (error) {
-          setState({ ...state, error, loading: false });
+
         }
       })();
     }
   }, []);
 
-  if (state.loading && user) {
+  if (user && Object.keys(userInfor).length === 0) {
     return <LoadingBar active={true} />;
-  }
-  if (state.error) {
-    return <div>Oops... {state.error.message}</div>
   }
 
   return (
     <Router>
       <Switch>
-        {user
+        {userInfor
           ? <AuthenticatedAppRoutes 
-              userInfor={state.data} 
+              userInfor={userInfor} 
+              setUserInfor={setUserInfor}
               getAccessTokenSilently={getAccessTokenSilently} />
           : <UnAuthenticatedAppRoutes />}
       </Switch>
@@ -82,7 +75,7 @@ const UnAuthenticatedAppRoutes = () => {
   );
 }
 
-const AuthenticatedAppRoutes = ({ userInfor, getAccessTokenSilently }) => {
+const AuthenticatedAppRoutes = ({ userInfor, setUserInfor, getAccessTokenSilently }) => {
   const { pathname } = useLocation();
   const options = { audience: process.env.REACT_APP_AUTH0_AUDIENCE }
   const { audience, scope } = options;
@@ -105,10 +98,10 @@ const AuthenticatedAppRoutes = ({ userInfor, getAccessTokenSilently }) => {
   }
 
   return (
-    <UserContext.Provider value={userInfor}>
+    <UserInforContext.Provider value={[userInfor, setUserInfor]}>
       <Route exact path="/" component={Home} />
       <Route path="/posts/:postId" component={SinglePostPage} />
       <Route path='/profiles/:profileId' component={Profile} />
-    </UserContext.Provider>
+    </UserInforContext.Provider>
   );
 }
