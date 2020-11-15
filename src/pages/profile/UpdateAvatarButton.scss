@@ -1,0 +1,12 @@
+.UpdateAvatarButton {
+  position: absolute;
+  right: 40px;
+  bottom: 15px;
+
+  .camera__button {
+    height: 36px;
+    padding: 8px;
+    background-color: #ccc;
+    border-radius: 50%;
+  }
+}
