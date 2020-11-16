@@ -16,7 +16,7 @@ function Post({ post }) {
         <div className="post__info">
           <Avatar src={post.owner_pic} className="post__avatar" />
           <div className="post__topInfo">
-            <PostOwner ownerName={post.owner_name} postId={post.id} profileEndpoint={post.profile} />
+            <PostOwner ownerName={post.owner_name} owner_pic={post.owner_pic} profileEndpoint={post.profile} />
             <div className="add__info">
               <TimeAgo time={post.time} />
               <Mode mode={"Public"} />

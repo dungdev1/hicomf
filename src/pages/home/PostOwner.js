@@ -10,12 +10,12 @@ import SVGIcon from '../../components/SVGIcon';
 
 import './PostOwner.scss';
 
-function PostOwner({ ownerName, postId, profileEndpoint }) {
+function PostOwner({ ownerName, owner_pic, profileEndpoint }) {
   const { getAccessTokenSilently } = useAuth0();
   const [isShown, setIsShown] = useState(false);
   const [state, setState] = useState({
     error: null,
-    loadng: true,
+    loading: true,
     profileInfo: {}
   });
   let history = useHistory();
@@ -38,6 +38,7 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
           if (res.ok) {
             const data = await res.json();
             if (mounted) {
+              
               setState({
                 ...state,
                 profileInfo: data,
@@ -66,66 +67,72 @@ function PostOwner({ ownerName, postId, profileEndpoint }) {
     history.push(`/profiles/${nameList[nameList.length - 1]}`);
   }
 
-  if (state["loading"]) {
-    return <Spinner active={true} />;
-  } else if (state["error"]) {
-    return "Opps...Something wrongs";
-  }
-  const profileInfo = state["profileInfo"];
+  let summaryContent;
 
-  const summaryContent = (
-    <>
-      <div className="basicInfor row">
-        <div className="col-3">
-          <Avatar name={profileInfo.full_name} avatarUrl={profileInfo.avatarUrl} />
-        </div>
-        <div className="col-9">
-          <h3>{profileInfo.full_name}</h3>
-          <div>
-            <SVGIcon
-              name="work"
-              fill="#454545"
-              width="19"
-              height="16" />
-            <p>Here is Work description</p>
+  if (state["loading"]) {
+    console.log("run spinner");
+    summaryContent = <Spinner active={true} />;
+  } else if (state["error"]) {
+    summaryContent = "Opps...Something wrongs";
+  } else {
+    const profileInfo = state["profileInfo"];
+
+    summaryContent = (
+      <>
+        <div className="basicInfor row">
+          <div className="col-3">
+            <Avatar name={profileInfo.full_name} avatarUrl={owner_pic} />
           </div>
-          <div>
-            <FontAwesomeIcon icon={faHeart} style={{ color: "#454545" }} />
-            <p>Here is Relationship description</p>
+          <div className="col-9">
+            <h3 onClick={redirectHandler}>
+              {profileInfo.full_name}
+            </h3>
+            <div>
+              <SVGIcon
+                name="work"
+                fill="#454545"
+                width="19"
+                height="16" />
+              <p>Here is Work description</p>
+            </div>
+            <div>
+              <FontAwesomeIcon icon={faHeart} style={{ color: "#454545" }} />
+              <p>Here is Relationship description</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="buttons">
-        <div className="info_button messageButton">
-          <Button
-            className="button message__button"
-            iconName="message"
-            fill="#000"
-            stroke="#454545"
-            width="17.901"
-            height="16.078" />
-          <p>Message</p>
+        <div className="buttons">
+          <div className="info_button messageButton">
+            <Button
+              className="button message__button"
+              iconName="message"
+              fill="#000"
+              stroke="#454545"
+              width="17.901"
+              height="16.078" />
+            <p>Message</p>
+          </div>
+          <div className="info_button friendButton">
+            <Button
+              className="button friend__button"
+              iconName="friend"
+              fill="#000"
+              stroke="#454545"
+              width="15.265"
+              height="15.265" />
+          </div>
+          <div className="info_button settingButton">
+            <Button
+              className="button button__setting"
+              iconName="more-horiz"
+              fill="#000"
+              width="19.6"
+              height="4.612" />
+          </div>
         </div>
-        <div className="info_button friendButton">
-          <Button
-            className="button friend__button"
-            iconName="friend"
-            fill="#000"
-            stroke="#454545"
-            width="15.265"
-            height="15.265" />
-        </div>
-        <div className="info_button settingButton">
-          <Button
-            className="button button__setting"
-            iconName="more-horiz"
-            fill="#000"
-            width="19.6"
-            height="4.612" />
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 
   return (
     <div
