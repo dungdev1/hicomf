@@ -14,16 +14,13 @@ function PostList() {
   const posts = useSelector(state => selectPostsByUser(state, user.profileId));
 
   if (posts) {
-    const orderedPosts = posts
-      .slice()
-      .sort((a, b) => b.time.localeCompare(a.date));
     return (
       <div className="PostList">
         <div className="PostSearchBar">
           <h3>Publications</h3>
           <SearchBar />
         </div>
-        {orderedPosts.map(post => (
+        {posts.map(post => (
           <Post key={post.id} post={post} />
         ))}
       </div>

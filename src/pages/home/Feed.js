@@ -7,9 +7,6 @@ import './Feed.css';
 import Spinner from '../../components/Spinner';
 
 function Feed({ status, error, posts }) {
-  const orderedPosts = posts
-    .slice()
-    .sort((a, b) => b.time.localeCompare(a.date));
 
   let content;
   if (status === 'loading') {
@@ -21,7 +18,7 @@ function Feed({ status, error, posts }) {
       <div className="feed">
         <MessageSender />
         <div className="posts">
-          {orderedPosts.map(post => (
+          {posts.map(post => (
             <Post key={post.id} post={post}/>
           ))}
         </div>
