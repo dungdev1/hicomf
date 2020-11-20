@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Spinner from '../../components/Spinner';
 import './ProfileImage.scss';
 
@@ -57,9 +58,16 @@ function ProfileImage() {
   }
 
   const imageElements = items.map((item, i) => (
-    <div key={i} className="image">
-      <img src={item} alt="" />
-    </div>
+    <CSSTransition
+      key={i}
+      timeout={{ enter: 500, exit: 500 }}
+      className="imageItem"
+    >
+      <div className="image">
+        <img src={item} alt="" />
+      </div>
+    </CSSTransition>
+
   ));
 
   return (
@@ -67,12 +75,26 @@ function ProfileImage() {
       <div className="prev">
         <a onClick={handlePrevButton}>&#10094;</a>
       </div>
-      <div className="ImageList">
-        {isLoading 
-          ? <Spinner active={true} />
-          : imageElements
-        }
-      </div>
+      {isLoading
+        ? <Spinner active={true} />
+        : (
+          <TransitionGroup className="ImageList">
+            {/* {imageElements} */}
+            {items.map((item, i) => (
+              <CSSTransition
+                key={i}
+                timeout={{ enter: 500, exit: 500 }}
+                className="imageItem"
+              >
+                <div className="image">
+                  <img src={item} alt="" />
+                </div>
+              </CSSTransition>
+
+            ))}
+          </TransitionGroup>
+        )
+      }
       <div className="next">
         <a onClick={handleNextButton}>&#10095;</a>
       </div>

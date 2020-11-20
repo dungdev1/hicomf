@@ -1,19 +1,18 @@
 .ProfileImage {
-  height: 225px;
   padding: 40px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   position: relative;
 
-  .image {
+  .imageItem {
     width: fit-content;
     float: left;
     margin-right: 25px;
     flex-grow: 1;
     
     img {
-      max-height: -webkit-fill-available;
+      height: 130px;
       border-radius: 10px;
     }
   }
@@ -49,17 +48,17 @@
   }
 }
 
-.image-enter {
+.imageItem-enter {
   opacity: 0;
 }
-.image-enter-active {
+.imageItem-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
-.image-exit {
+.imageItem-exit {
   opacity: 1;
 }
-.image-exit-active {
+.imageItem-exit-active {
   opacity: 0;
   transition: opacity 500ms ease-in;
 }
