@@ -1,5 +1,4 @@
-import { Avatar } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../contexts/UserContext';
 
 import db from '../../lib/firebase';
@@ -7,39 +6,58 @@ import firebase from 'firebase';
 
 import './CommentInput.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { callApi } from '../../utils';
+import { UserInforContext } from '../../AppRoutes';
+import Avatar from '../../components/Avatar';
+import { useDispatch } from 'react-redux';
+import { addNewComment } from './commentsSlice';
 
-function CommentInput({ postID }) {
-  const { user } = useAuth0();
+function CommentInput({ postId }) {
+  const [userInfor, setUserInfor] = useContext(UserInforContext);
   const [content, setContent] = useState("");
+  const { getAccessTokenSilently } = useAuth0();
+
+  const textRef = useRef(null);
+
+  const dispatch = useDispatch();
 
   function handleInputChange(e) {
-    setContent(e.target.value);
+    setContent(e.currentTarget.innerText);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    db.collection(`posts/${postID}/comments`).add({
-      content: content,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      user: db.doc('users/' + user.uid)
-    });
-    setContent("");
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      if (content.length > 0) {
+        (async () => {
+          const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+          const accessToken = await getAccessTokenSilently({ audience });
+          const url = process.env.REACT_APP_SERVER_URL + `/api/v1/posts/${postId}/comments/`;
+          dispatch(addNewComment({ accessToken, url, initialComment: { text: content } }));
+        })();
+      }
+      textRef.current.innerText = "";
+      setContent("");
+    }
   }
 
   return (
     <div className="comment-box__input">
       <div className="comment-box__input-avatar">
-        <Avatar src={user.photoURL} />
+        <Avatar 
+          avatarUrl={userInfor.avatar} 
+          name={userInfor.full_name}
+          style={{width: "40px"}} />
       </div>
       <div className="comment-box__form">
-        <form onSubmit={handleSubmit}>
-          <input 
-            type="text"
-            placeholder="Leave comment"
-            value={content}
-            onChange={handleInputChange}
-          />
-        </form>
+        <span
+          className="textarea"
+          role="textbox"
+          contentEditable
+          onInput={handleInputChange}
+          suppressContentEditableWarning
+          onKeyPress={handleKeyPress}
+          ref={textRef}
+        ></span>
       </div>
     </div>
   )

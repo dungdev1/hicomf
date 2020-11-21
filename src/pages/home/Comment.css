@@ -10,26 +10,11 @@
   align-items: center;
 }
 
-.comment__avatar {
-  margin-right: 15px;
-}
-
-.comment__info {
-
-}
-
-.comment__author {
+.comment__info .PostOwner h3 {
   font-size: 16px;
   font-weight: 600;
   color: #454545;
-  margin-bottom: 7px;
-}
-
-.comment__metadata {
-  font-size: 13px;
-  font-weight: 400;
-  color: #454545;
-  opacity: 0.44;
+  margin-bottom: 3px;
 }
 
 .comment__actions {

@@ -1,39 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './CommentBox.css';
 
 import Comment from './Comment';
 import CommentInput from './CommentInput';
 import CommentLoadingOption from './CommentLoadingOption';
-import { useFetch } from '../../hooks/useFetch';
+import { useSelector } from 'react-redux';
+import { selectCommentByPost } from './commentsSlice';
 
-function CommentBox({ postID }) {
-  const [isAllowLoad, setIsAllowLoad] = useState(true);
-  const [comments, setComments, isLoaded] = useFetch(`posts/${postID}/comments`, 2, isAllowLoad, setIsAllowLoad);
-  return (
-    <>
-      {!isLoaded
-        ? <div className="loader"></div>
-        : (
-          <div className="comment-box">
-            <CommentLoadingOption 
-              postID={postID}
-              onSetCommentsChange={setComments} />
-            <CommentInput postID={postID} />
-            <div className="comment-box__comments">
-              {comments.map(comment => (
-                <Comment
-                  key={comment.id}
-                  userInfo={comment.userData}
-                  time={comment.timestamp}
-                  content={comment.content} />
-              ))}
-            </div>
-          </div>
-        )
-      }
-    </>
-  );
+
+function CommentBox({ postId }) {
+  const comments = useSelector(state => selectCommentByPost(state, postId));
+  const error = useSelector(state => state.comments.error);
+  const commentStatus = useSelector(state => state.comments.status);
+
+  if (commentStatus === 'loading') {
+    return <div className="loader"></div>;
+  } else if (commentStatus === 'failed') {
+    return <div>Opps... {error}</div>
+  } else {
+    return (
+      <div className="comment-box">
+        <CommentLoadingOption
+          postId={postId} />
+        <CommentInput postId={postId} />
+        <div className="comment-box__comments">
+          {comments.map(comment => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default CommentBox;

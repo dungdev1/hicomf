@@ -1,24 +1,26 @@
-import { Avatar } from '@material-ui/core'
 import React from 'react';
+import Avatar from '../../components/Avatar';
+import TimeAgo from '../../components/TimeAgo';
 
 import './Comment.css';
 
 import CommentLike from './CommentLike';
 import CommentReply from './CommentReply';
+import PostOwner from './PostOwner';
 
-function Comment({ userInfo, time, content }) {
+function Comment({ comment }) {
   return (
     <div className="comment">
       <div className="comment__top">
-        <div className="comment__avatar">
-          <Avatar src={userInfo.photoURL} />
-        </div>
+        <Avatar
+          avatarUrl={comment.owner_pic}
+          name={comment.owner_name}
+          style={{ width: "35px", marginRight: "15px" }} />
         <div className="comment__info">
-          <div className="comment__author">
-            <p>{userInfo.displayName}</p>
-          </div>
+          <PostOwner ownerName={comment.owner_name} owner_pic={comment.owner_pic} profileEndpoint={comment.profile} />
           <div className="comment__metadata">
-            <p>{new Date(time?.toDate()).toLocaleString("en-US", { timeZone: 'Asia/Ho_Chi_Minh' })}</p>
+            <TimeAgo time={comment.time}
+              style={{ fontSize: "13px", fontWeight: 400 }} />
           </div>
         </div>
         <div className="comment__actions">
@@ -31,10 +33,10 @@ function Comment({ userInfo, time, content }) {
         </div>
       </div>
       <div className="comment__content">
-        <p>{content}</p>
+        <p>{comment.text}</p>
       </div>
     </div>
-  )
+  );
 }
 
 export default Comment;

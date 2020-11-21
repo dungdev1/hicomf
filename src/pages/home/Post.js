@@ -18,7 +18,7 @@ function Post({ post }) {
           <div className="post__topInfo">
             <PostOwner ownerName={post.owner_name} owner_pic={post.owner_pic} profileEndpoint={post.profile} />
             <div className="add__info">
-              <TimeAgo time={post.time} />
+              <TimeAgo time={post.time} style={{fontSize: "14px"}} />
               <Mode mode={"Public"} />
             </div>
           </div>
@@ -39,9 +39,6 @@ function Post({ post }) {
       </div>
       {post.photos.length > 0 && <PostPhoto photos={post.photos} />}      
       <PostInteraction
-        likesUrl={post.likes}
-        commentsUrl={post.comments}
-        sharesUrl={post.shares}
         numLikes={post.num_likes}
         numComments={post.num_comments}
         numShares={post.num_shares}

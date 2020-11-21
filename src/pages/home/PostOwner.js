@@ -70,7 +70,6 @@ function PostOwner({ ownerName, owner_pic, profileEndpoint }) {
   let summaryContent;
 
   if (state["loading"]) {
-    console.log("run spinner");
     summaryContent = <Spinner active={true} />;
   } else if (state["error"]) {
     summaryContent = "Opps...Something wrongs";

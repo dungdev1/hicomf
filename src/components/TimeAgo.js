@@ -49,7 +49,7 @@ function getDistanceTimeString(time) {
   return `${daysDistance}d`;
 }
 
-function TimeAgo({ time }) {
+function TimeAgo({ time, style }) {
   let timeString = '';
   if (time) {
     timeString = getDistanceTimeString(time);
@@ -63,8 +63,8 @@ function TimeAgo({ time }) {
   `;
 
   return (
-    <div className="tooltip time" style={{ fontSize: '14px' }}>
-      <p style={{opacity: '0.44'}}>{timeString}</p>
+    <div className="tooltip time" >
+      <p style={{...style, opacity: '0.44'}}>{timeString}</p>
       <span className="tooltiptext">{timeStringDetail}</span>
     </div>
   );

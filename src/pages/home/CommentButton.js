@@ -1,36 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '../../components/Button';
-
-import db from '../../lib/firebase';
 import { convertNum } from '../../utils';
+import { fetchComments } from './commentsSlice';
 
-function CommentButton({ postID, onOpenCommenBoxChange }) {
-  const [comments, setComments] = useState([]);
+function CommentButton({ onOpenCommenBoxChange, numComments, postId }) {
+  const { getAccessTokenSilently } = useAuth0();
 
-  useEffect(() => {
-    db.collection(`posts/${postID}/comments`)
-    .onSnapshot(function(querySnapshot) {
-      if (querySnapshot.docs.length === 0) {
-        setComments([]);
-      }
-      let allComments = [];
-      querySnapshot.docs.forEach((doc, index) => {
-        const comment = doc.data();
-        comment.id = doc.id;
-        comment.user.get()
-        .then(doc => doc.data())
-        .then(userData => {comment.userData = userData})
-        .then(() => {
-          allComments.push(comment);
-          if (index === querySnapshot.docs.length - 1) {
-            setComments(allComments); 
-          }
-        });
-      });
-    });
-  }, []);
+  const dispatch = useDispatch();
 
   function handleOpenCommentBoxChange() {
+    (async () => {
+      const url = process.env.REACT_APP_SERVER_URL + `/api/v1/posts/${postId}/comments/`;
+      const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+      const accessToken = await getAccessTokenSilently({ audience });
+
+      dispatch(fetchComments({ accessToken, url }));
+
+    })();
     onOpenCommenBoxChange();
   }
 
@@ -46,7 +34,7 @@ function CommentButton({ postID, onOpenCommenBoxChange }) {
         strokeWidth="0.5"
         onClick={handleOpenCommentBoxChange}
       />
-      <p>{convertNum(comments.length)}</p>
+      <p>{convertNum(numComments)}</p>
     </>
   )
 }
