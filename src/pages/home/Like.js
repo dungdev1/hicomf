@@ -63,7 +63,10 @@ function Like({ numLikes, postId }) {
         onClick={handleClick}
         className="button"
       />
-      <LikeUser likesNumber={likesNumber} postId={postId} />
+      {isLiked
+        ? <LikeUser likesNumber={likesNumber} postId={postId} style={{color: "#5085E8"}} />
+        : <LikeUser likesNumber={likesNumber} postId={postId} />
+      }
     </>
   )
 }

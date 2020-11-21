@@ -4,7 +4,7 @@ import { callApi, convertNum } from '../../utils';
 
 import './LikeUser.scss';
 
-function LikeUser({ postId, likesNumber }) {
+function LikeUser({ postId, likesNumber, style }) {
   const { getAccessTokenSilently } = useAuth0();
   const [isShown, setIsShown] = useState(false);
   const [profiles, setProfiles] = useState([]);
@@ -25,7 +25,9 @@ function LikeUser({ postId, likesNumber }) {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      {convertNum(likesNumber)}
+      <div className="like-number" style={style} >
+        {convertNum(likesNumber)}
+      </div>
       {(isShown && profiles.length > 0) 
         && <span className="tooltiptext">{profiles.map(profile => profile.full_name)}</span>
       }
